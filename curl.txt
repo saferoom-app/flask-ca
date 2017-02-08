@@ -1,0 +1,5 @@
+# Creating Root CA
+curl -vvv -X POST -H "Content-Type: application/json" -d "{\"name\":\"Saferoom Root CA\",\"subject_dn\":{\"CN\":\"Saferoom Root CA\",\"C\":\"US\",\"OU\":\"Saferoom\",\"O\":\"Saferoom\"},\"pass\":\"testtest\",\"keylen\":2048,\"months\":12}" http://www.saferoomapp.com:5000/ca/create
+
+# Creating Subordinate CA
+curl -vvv -X POST -H "Content-Type: application/json" -d "{\"name\":\"Saferoom Intermediate CA\",\"subject_dn\":{\"CN\":\"Saferoom Intermediate CA\",\"C\":\"US\",\"OU\":\"Saferoom\",\"O\":\"Saferoom\"},\"pass\":\"testtest\",\"keylen\":2048,\"months\":12,\"rootca\":1}" http://www.saferoomapp.com:5000/ca/create
