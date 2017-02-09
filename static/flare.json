@@ -1,0 +1,34 @@
+{
+    "name":"CA Tree",
+    "children":[
+        {
+            "name":"Root CA1",
+            "children":[
+                {
+                    "name":"Subordinate CA 1",
+                    "children":[]
+                },
+                {
+                    "name":"Subordinate CA 2",
+                    "children":[]
+                }
+
+            ]
+        },
+        {
+            "name":"Root CA2",
+            "children":[
+                {
+                    "name":"Subordinate CA 1",
+                    "children":[]
+                },
+                {
+                    "name":"Subordinate CA 2",
+                    "children":[]
+                }
+
+            ]
+        }
+
+    ]
+}

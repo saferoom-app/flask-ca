@@ -1,0 +1,52 @@
+<br/>
+<div class="input-group">
+	<span  class="input-group-btn">
+        <button title="Click to update the list of notes" type="button" class="btn btn-default" aria-label="Left Align" id="btnRefresh">
+        	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create new CA
+        </button>
+   </span>
+   <input style="margin-left:10px;width:60%" placeholder="Type text to search" type="text" class="form-control" id="txtSearch">
+   
+</div><hr/>
+<table class="table table-striped">
+	<thead>
+		<th><input type="checkbox"/></th>
+		<th>Name</th>
+		<th>Description</th>
+		<th>Root CA</th>
+		<th>CA certificate</th>
+		<th>CRL</th>
+	</thead>
+	<tbody>
+		<tr style="vertical-align:middle">
+			<td><input type="checkbox"/></td>
+			<td>Root CA 1</td>
+			<td>This is the test Root CA</td>
+			<td><span class="label label-primary">N/A</span></td>
+			<td>
+				<span><button style="font-size:0.8em" title="Click to download CA certificate in PEM format" type="button" class="btn btn-default" aria-label="Left Align" id="btnRefresh">PEM</button></span>
+				<span><button style="font-size:0.8em" title="Click to download CA certificate in DER format" type="button" class="btn btn-default" aria-label="Left Align" id="btnRefresh">DER</button></span>
+			</td>
+			<td>
+				<span><button style="font-size:0.8em" title="Click to download CA certificate in PEM format" type="button" class="btn btn-default" aria-label="Left Align" id="btnRefresh">Full</button></span>
+				<span><button style="font-size:0.8em" title="Click to download CA certificate in DER format" type="button" class="btn btn-default" aria-label="Left Align" id="btnRefresh">Delta</button></span>
+			</td>
+		</tr>
+		<tr style="vertical-align:middle">
+			<td><input type="checkbox"/></td>
+			<td>Subordinate CA 1</td>
+			<td>This is the test subordinate CA</td>
+			<td><span class="label label-primary">Root CA 1</span></td>
+			<td>
+				<span><button style="font-size:0.8em" title="Click to download CA certificate in PEM format" type="button" class="btn btn-default" aria-label="Left Align" id="btnRefresh">PEM</button></span>
+				<span><button style="font-size:0.8em" title="Click to download CA certificate in DER format" type="button" class="btn btn-default" aria-label="Left Align" id="btnRefresh">DER</button></span>
+			</td>
+			<td>
+				<span><button style="font-size:0.8em" title="Click to download CA certificate in PEM format" type="button" class="btn btn-default" aria-label="Left Align" id="btnRefresh">Full</button></span>
+				<span><button style="font-size:0.8em" title="Click to download CA certificate in DER format" type="button" class="btn btn-default" aria-label="Left Align" id="btnRefresh">Delta</button></span>
+			</td>
+		</tr>
+
+		
+	</tbody>
+</table>
