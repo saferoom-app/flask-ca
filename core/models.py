@@ -11,7 +11,9 @@ class CertificateAuthority(Base):
     id = Column(Integer,primary_key=True)
     root_ca = Column(Integer,default=0)
     name = Column(String(256),index=True)
+    dscr = Column(String(256),index=True)
     subject_dn = Column(String(128),index=True)
+    extensions = Column(Text,index=False)
 
     # Relationships
     keys = relationship('Key')
@@ -45,12 +47,11 @@ class Key(Base):
 
     def generate_private_key(self,password,length):
         self.pKey = crypto.PKey()
-        print password
         self.pKey.generate_key(crypto.TYPE_RSA, length)
         # Assigning private key
         self.private = crypto.dump_privatekey(crypto.FILETYPE_PEM,self.pKey,cipher="AES256",passphrase=str(password))
 
-    def generate_public_key(self,subject,months,root_key=None,root_ca=None):
+    def generate_public_key(self,subject,months,root_key=None,root_ca=None,extensions=[]):
         
         # Generating the serial number
         md5_hash = hashlib.md5()
@@ -70,13 +71,16 @@ class Key(Base):
         ca_cert.set_pubkey(self.pKey)
         if root_ca is not None:
             ca_cert.set_issuer(root_ca.get_subject())
-            ca_cert.add_extensions([crypto.X509Extension("basicConstraints", True,"CA:TRUE"),\
-                crypto.X509Extension("keyUsage", True,"keyCertSign, cRLSign"),crypto.X509Extension("subjectKeyIdentifier", False, "hash",subject=ca_cert),crypto.X509Extension('authorityKeyIdentifier', False,'keyid,issuer', issuer=root_ca)])
+            ca_cert.add_extensions([crypto.X509Extension(config.extensions['bc'], True,"CA:TRUE"),\
+                crypto.X509Extension(config.extensions['ku'], True,"keyCertSign, cRLSign"),crypto.X509Extension(config.extensions['ski'], False, "hash",subject=ca_cert),crypto.X509Extension(config.extensions['aki'], False,'keyid,issuer', issuer=root_ca)])
         else:
             ca_cert.set_issuer(ca_cert.get_subject())
-            ca_cert.add_extensions([crypto.X509Extension("basicConstraints", True,"CA:TRUE"),\
-                crypto.X509Extension("keyUsage", True,"keyCertSign, cRLSign"),crypto.X509Extension("subjectKeyIdentifier", False, "hash",subject=ca_cert),crypto.X509Extension('authorityKeyIdentifier', False,'keyid,issuer', issuer=ca_cert)])
-            
+            ca_cert.add_extensions([crypto.X509Extension(config.extensions['bc'], True,"CA:TRUE"),\
+                crypto.X509Extension(config.extensions['ku'], True,"keyCertSign, cRLSign"),crypto.X509Extension(config.extensions['ski'], False, "hash",subject=ca_cert),crypto.X509Extension(config.extensions['aki'], False,'keyid,issuer', issuer=ca_cert)])
+        
+        # Adding additional extensions
+        for extension in extensions:
+            ca_cert.add_extensions([crypto.X509Extension(config.extensions[extension['name']],extension['crit'],str(extension['value']))])            
         if root_key is not None:
             ca_cert.sign(root_key, 'sha1')
         else:
@@ -84,7 +88,7 @@ class Key(Base):
               
 
         # Setting the public key
-        self.public = crypto.dump_certificate(crypto.FILETYPE_PEM,ca_cert)    
+        self.public = crypto.dump_certificate(crypto.FILETYPE_PEM,ca_cert)
 
 class Certificate(Base):
     __tablename__ = "certificates"
@@ -110,7 +114,7 @@ class Certificate(Base):
 
     # Generating new certificate from provided data
     @staticmethod
-    def generate(ca_id,subject,months,password=None):
+    def generate(ca_id,subject,months,password=None,extensions=[]):
         '''
             Function used to generate new certificate from provided data
             ca_id = Certificate Authority ID (to get the Issuer DN and private key to sign the certificate)
@@ -163,7 +167,8 @@ class Certificate(Base):
         cert.gmtime_adj_notAfter(months*30*24*60*60)
         cert.set_issuer(public_key.get_subject())
         cert.set_pubkey(pKey)
-        cert.add_extensions([crypto.X509Extension("keyUsage", True,config.key_usage['digsign']+","+config.key_usage['keyag']),crypto.X509Extension("extendedKeyUsage", True,config.ext_key_usage["ca"]),crypto.X509Extension("basicConstraints", True,"pathlen:0")])
+        for extension in extensions:
+            cert.add_extensions([crypto.X509Extension(config.extensions[extension['name']],extension['crit'],str(extension['value']))])
         cert.sign(private_key, 'sha256')
 
         # Dumping into a file
@@ -183,3 +188,19 @@ class Certificate(Base):
         certificate.status = 1
 
         return certificate
+
+class Template(Base):
+    __tablename__ = "templates"
+
+    # Columns
+    id = Column(Integer,primary_key=True)
+    name = Column(String(128),index=True)
+    dscr = Column(String(256),index=True)
+    extensions = Column(Text)
+
+    def __init__(self,name,dscr):
+        self.name = name
+        self.dscr = dscr
+
+    def __repr__(self):
+        return "<Template, name=%r, dscr=%r, extensions=%r" % (self.name,self.dscr,self.extensions)

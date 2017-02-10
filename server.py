@@ -3,7 +3,7 @@ from flask import Flask, jsonify,render_template
 from flask_sqlalchemy import SQLAlchemy
 from core.database import db_session,init_db
 from OpenSSL import crypto, SSL
-from core.models import Key, CertificateAuthority, Certificate
+from core.models import Key, CertificateAuthority, Certificate, Template
 import json,datetime,config,hashlib,uuid
 from dateutil.relativedelta import relativedelta
 from core.functions import force_bytes
@@ -35,8 +35,27 @@ def shutdown_session(exception=None):
 
 @app.route("/init")
 def init():
-	init_db()
-	return ""
+    init_db()
+    
+    # Initializing the predefined templates
+    tpl = Template("Server Authentication certificate","This is the template to create Server Authentication certificates")
+    extensions = []
+    extensions.append({"name":"bc","crit":True,"value": "pathlen:0"})
+    extensions.append({"name":"ku","crit":True,"value": "%s,%s,%s" % (config.key_usage['digsign'],config.key_usage['keyenc'],config.key_usage['keyag'])})
+    extensions.append({"name":"eku","crit":True,"value": "%s" % config.ext_key_usage['sa']})
+    tpl.extensions = json.dumps(extensions)
+    db_session.add(tpl)
+    db_session.commit()
+    return ""
+
+@app.route("/demo")
+def demo():
+    
+    
+    print tpl
+    return ""
+
+    
 
 @app.route("/")
 def index():
@@ -50,10 +69,13 @@ def issue_cert(id):
     if not ca:
         return "Not found"
 
+    # Getting the template
+    tpl = Template.query.get(1)
+
     # Generating certificate
     post = '{"CN":"Alexey Zelenkin","C":"US","OU":"Saferoom","O":"Saferoom"}'
     data = json.loads(post)
-    certificate = Certificate.generate(ca.id,data,12)
+    certificate = Certificate.generate(ca.id,data,12,extensions=json.loads(tpl.extensions))
     certificate.authority = ca
     db_session.add(certificate)
     db_session.commit()

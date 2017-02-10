@@ -1,9 +1,32 @@
+# Extensions
+extensions = {"bc": "basicConstraints",\
+              "ku":"keyUsage",\
+              "eku":"extendedKeyUsage",\
+              "ski":"subjectKeyIdentifier",\
+              "aki":"authorityKeyIdentifier",\
+              "salt":"subjectAltName",\
+              "ialt":"issuserAltName",\
+              "aia":"authorityInfoAccess",\
+              "crl":"crlDistributionPoints",\
+              "cp":"certificatePolicies",\
+              "pc":"policyConstraints"}
+
 # Key usages
-key_usage = {"digsign":"digitalSignature","nonrep":"nonRepudiation","keysign":"keyCertSign",\
-"crlsign":"cRLSign","keyenc":"keyEncipherment","keyag":"keyAgreement","enconly":"encipherOnly","deconly":"decipherOnly"}
+key_usage = {"digsign":"digitalSignature",\
+             "nonrep":"nonRepudiation",\
+             "keysign":"keyCertSign",\
+             "crlsign":"cRLSign",\
+             "keyenc":"keyEncipherment",\
+             "keyag":"keyAgreement",\
+             "enconly":"encipherOnly",\
+             "deconly":"decipherOnly"}
 
 # Extended Key Usages
-ext_key_usage = {"sa":"serverAuth","ca":"clientAuth","code":"codeSigning","email":"emailProtection","time":"timeStamping"}
+ext_key_usage = {"sa":"serverAuth",\
+                 "ca":"clientAuth",\
+                 "code":"codeSigning",\
+                 "email":"emailProtection",\
+                 "time":"timeStamping"}
 
 # HTTP codes
 http_created = 201

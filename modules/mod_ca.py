@@ -15,7 +15,6 @@ def create_ca():
     '''
 		Function is used to create new CA (Root or Subordinate). If we're creating the Subordinate CA, we need to specify the "root_ca". By default it's None
     '''
-    print "asdasdasdasdsadasd"
     # Parsing request
     data = request.get_json()    
 
@@ -40,7 +39,7 @@ def create_ca():
     # Creating a pair of keys
     key = Key()
     key.generate_private_key(data['pass'],data['keylen'])
-    key.generate_public_key(data['subject_dn'],data['months'],root_key,root_cert)
+    key.generate_public_key(data['subject_dn'],data['months'],root_key,root_cert,data['extensions'])
     key.expires_in = datetime.datetime.now() + relativedelta(months=data['months'])
 
     with open("intermediate.crt","w") as f:
