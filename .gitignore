@@ -4,6 +4,7 @@
 
 *.py[cod]
 *.status
+*.db
 
 # Packages
 *.egg
