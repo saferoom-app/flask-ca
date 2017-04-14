@@ -1,0 +1,24 @@
+<br/><div class="row">
+	<div class="col-md-12" style="margin:10px 10px 10px 10px">
+		<!-- Template name -->
+		<div>
+			<label>CA Type: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Select whether you want to create Root or Intermediate CA"></i></label>
+			<select style="width:95%" class="form-control" id="selectType">
+				<option value="0">Root</option>
+				<option value="1">Intermediate</option>
+			</select>
+		</div><br/>
+		<div>
+			<label>Certificate Authority: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Select the root Certificate Authority for this CA"></i></label>
+			<select style="width:95%" disabled="true" class="form-control" id="selectRoot">
+				{%for ca in cas%}
+					<option value="{{ca.id}}">{{ca.name}}</option>
+				{%endfor%}
+			</select>
+		</div><br/>
+		<div>
+			<label>Private key password: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Specify the password to decrypt Root CA private key"></i></label>
+			<input disabled="true" type="password" maxlength="128" style="width:95%" placeholder="Private key password" class="form-control" id="txtRootPass" />
+		</div><br/>
+	</div>
+</div>

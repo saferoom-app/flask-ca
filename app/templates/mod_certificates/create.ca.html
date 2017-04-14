@@ -1,0 +1,13 @@
+<h3>Certification Authority</h3><hr/>
+<div>
+	<label>Certificate Authority <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Select the Certificate Authority to issue the certificate" id="blah"></i></label>
+	<select class="form-control" id="txtCA" style="width:50%">
+		<option value=""> -- Select Certificate Authority -- </option>
+		{%for ca in cas%}
+			<option value="{{ca.id}}">{{ca.name}}</option>
+		{%endfor%}
+	</select><br/>
+	<label>Password <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Password to decrypt the CA's private key" id="blah"></i></label>
+	<input type="password" id="txtPass" class="form-control" style="width:50%" placeholder="Type password to decrypt CA's private key" />
+
+</div><br/>

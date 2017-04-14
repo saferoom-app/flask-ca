@@ -1,0 +1,20 @@
+<div class="row">
+	<div class="col-md-12">
+		{%include "panel.alert.html"%}
+		{%include "mod_certificates/create.users.html"%}
+		{%include "mod_certificates/create.ca.html"%}
+		{%include "mod_certificates/create.template.html"%}
+		<hr/>
+		<div class="row">
+			<div class="col-md-12">
+				<button style="margin-right:10px" title="Generate certificates" type="button" class="btn btn-primary" aria-label="Left Align" id="btnGenerate">
+        			<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> Generate
+        		</button>		
+        		<button style="margin-right:10px" title="Cancel the update operation and go back to the list of certificates" type="button" class="btn btn-default" aria-label="Left Align" id="btnCancel">
+        			<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel
+        		</button>
+			</div>
+		</div>
+	</div>
+</div>
+<input type="hidden" id="txtValid" value="0" />

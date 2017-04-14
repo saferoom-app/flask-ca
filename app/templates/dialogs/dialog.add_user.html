@@ -1,0 +1,41 @@
+<div class="dialog_content">
+	{%include "panel.alert.html"%}
+	<div>
+		<label>Name: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Common name that will be used as 'CN=' field in the Subject DN field" id="blah"></i></label>
+		<input {%if user['name']%}value="{{user['name']}}"{%endif%} type="text" style="width:95%" id="txt_CN" class="form-control" placeholder="Common name" />
+	</div><br/>
+	<div>
+		<label>Email: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="User's email that will be used as 'E=' field in the Subject DN field" id="blah"></i></label>
+		<input {%if user['email']%}value="{{user['email']}}"{%endif%} type="text" style="width:95%" id="txt_E" class="form-control" placeholder="Type user's email" />
+	</div><br/>
+	<div>
+		<label>Country: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Country that will be used as 'C=' field in the Subject DN field" id="blah"></i></label>
+		{%include "countries.html"%}
+	</div><br/>
+	<div>
+		<label>Organization: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="User's organization that will be used as 'O=' field in the Subject DN field" id="blah"></i></label>
+		<input {%if user['subject']['O']%}value="{{user['subject']['O']}}"{%endif%} type="text" id="txt_O" style="width:95%" class="form-control" placeholder="Type user's organization name" />
+	</div><br/>
+	<div>
+		<label>Department: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="User's department that will be used as 'OU=' field in the Subject DN field" id="blah"></i></label>
+		<input {%if user['subject']['OU']%}value="{{user['subject']['OU']}}"{%endif%} type="text" id="txt_OU" style="width:95%" class="form-control" placeholder="Type user's department" />
+	</div><br/>
+	<div>
+		<label>State: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="State that will be used as 'ST=' field in the Subject DN field" id="blah"></i></label>
+		<input {%if user['subject']['ST']%}value="{{user['subject']['ST']}}"{%endif%} type="text" id="txt_ST" style="width:95%" class="form-control" placeholder="Type user's state" />
+	</div><br/>
+	<div>
+		<label>City: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="User's city that will be used as 'L=' field in the Subject DN field" id="blah"></i></label>
+		<input {%if user['subject']['L']%}value="{{user['subject']['L']}}"{%endif%} type="text" id="txt_L" style="width:95%" class="form-control" placeholder="Type user's city" />
+	</div><br/>
+</div>
+<script>
+	$("[rel=tooltip]").tooltip({ placement: 'right'});$("div#panelAlert").hide();
+	{%if user['subject']%}
+		{%if user['subject']['C']%}
+			$("select#txt_C").val("{{user['subject']['C']}}");
+		{%endif%}
+	{%endif%}
+</script>
+<input type="hidden" id="txtID" value="{{user['id']}}"/>
+<input type="hidden" id="txtOP" value="{{op}}"/>

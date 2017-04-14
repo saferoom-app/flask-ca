@@ -1,0 +1,31 @@
+<h3>Users</h3><hr/>
+<div>
+	<span  class="input-group-btn">
+		<button style="margin-left:10px" title="Select users from list of already defined users" type="button" class="btn btn-default" aria-label="Left Align" id="btnSelect">
+			<span class="glyphicon glyphicon-list" aria-hidden="true"></span> Select user
+		</button>
+	</span>		
+</div><br/>
+<div>
+	<table id="tblUsers" class="table" style="width:95%">
+		<thead>
+			<th>#</th>
+			<th style="width:25%">Name</th>
+			<th>Email</th>
+			<th>Subject DN</th>
+			<th>Password <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Password used to protect generated PFX file. All certificates are stored in the database in PFX format protected by password. If you don't specify password, then system will use CA private key password to protect PFX" id="blah"></i></th>
+			<th style="width:10%">Validity <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="The number of months the certificate will be valid. Minimum = 1 month, Maximum = defined by CA. If certificate validity is longer than issuing CA certificate then system automatically set the validity to issuing CA certificate validity" id="blah"></i></th>
+		</thead>
+		<tbody>
+			<tr id="emptyRow">
+				<td colspan="10">
+					<div class="row">
+						<div class="col-md-12 greyedText" style="text-align:center">
+							-- No users added yet -- 
+						</div>
+					</div>
+				</td>
+			</tr>
+		</tbody>		
+	</table>
+</div><br/>

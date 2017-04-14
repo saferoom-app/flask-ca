@@ -1,0 +1,47 @@
+<h3>General</h3><hr/>
+<!-- General  -->
+<div class="row">
+	<div class="col-md-12" style="margin:0px 20px 20px 20px">
+	    <div>
+			<label>Name: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Template's descriptive name" id="blah"></i></label>
+	    	<input type="text" style="width:80%" class="form-control" id="txtName" value="{{template.name}}"/>
+	    </div><br/>
+	    <div>
+			<label>Description: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Template's brief description" id="blah"></i></label>
+	    	<textarea rows="5" style="width:80%" class="form-control" id="txtDscr">{{template.dscr}}</textarea>
+	    </div><br/>
+	    <div>
+			<label>Subject Alternative name: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="The subject alternative name extension allows identities to be bound to the subject of the certificate.  These identities may be included in addition to or in place of the identity in the subject field of the certificate" id="blah"></i></label>
+	    	<input type="text" style="width:80%" class="form-control" id="txtAlt" value="{{template.extensions.altname}}"/>
+	    </div><br/>
+	</div>
+</div>
+<h3>Extensions</h3><hr/>
+<div class="row">
+	<div class="col-md-12" style="margin:0px 20px 20px 20px">
+	    <!-- Key Usages -->
+	    {%include "mod_templates/key_usage.html"%}
+	    {%include "mod_templates/ext_key_usage.html"%}
+	    {%include "mod_templates/policies.html"%}
+	</div>
+</div>
+<h3>CRL information</h3><hr/>
+<div class="row">
+	<div class="col-md-12" style="margin:0px 20px 20px 20px">
+	    <!-- Key Usages -->
+	    {%include "mod_templates/crl.html"%}
+	</div>
+</div>
+<h3>AIA information</h3><hr/>
+<div class="row">
+	<div class="col-md-12" style="margin:0px 20px 20px 20px">
+	    <!-- Key Usages -->
+	    {%include "mod_templates/aia.html"%}
+	</div>
+</div><hr/>
+
+<script>
+	$('.selectpicker').selectpicker('refresh');
+	$("[rel=tooltip]").tooltip({ placement: 'right'});
+	$("div#panelAlert").hide();
+</script>

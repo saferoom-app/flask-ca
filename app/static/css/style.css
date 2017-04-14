@@ -1,0 +1,253 @@
+body{
+  font-family:Tahoma;
+  margin:0px;
+  width:100%;
+}
+#container{
+  display:block;
+  width:100%;
+  overflow-x: scroll;
+  border:1px solid #ddd;
+
+}
+.header{
+  color: #fff;
+  background-color: #2c3742;
+  font-size:1.5em;
+  padding-top:10px;
+  padding-bottom:10px;  
+}
+
+/* Sidebar navigation */
+
+.content-box, .content-box-large {
+   margin-bottom:30px;
+   background:#fff;
+   border-radius:10px;
+   padding:10px;
+   border-left:1px solid #eee;
+   border-top:1px solid #eee;
+   border-right:2px solid #eee;
+   border-bottom:2px solid #eee; 
+}
+
+.content-box-large {
+  padding: 20px;
+}
+
+.box-with-header {
+  border-top: none;
+  border-top-left-radius:0px;
+  border-top-right-radius:0px;
+}
+
+.content-box-header {
+  min-height: 40px;
+   font-size: 16px;
+   background:#f5f5f5;
+   border-top-left-radius:5px;
+   border-top-right-radius:5px;
+   padding:10px;
+   border-left:1px solid #eee;
+   border-top:1px solid #eee;
+   border-right:2px solid #eee;
+}
+
+.content-box-header:after {
+  clear:both;
+}
+
+.sidebar ul.nav, .sidebar ul.nav ul{
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+.sidebar ul.nav ul {
+   margin:0px;
+   padding:0px;
+   display:none;
+}
+
+.sidebar .nav li.open ul{
+   display:block;
+}
+
+.sidebar .nav > li {
+	margin: 0;
+   border-bottom:1px dashed #eee;
+}
+
+.sidebar .nav > li:last-child{
+   border-bottom:0px;
+}
+
+.sidebar .nav > li li {
+	margin: 0;
+}
+
+.sidebar .nav > li li a{
+   padding-left:25px;
+}
+
+.sidebar .nav > li > a {
+	font-size: 14px;
+	line-height: 20px;
+	padding: 15px 15px;
+	color: #999;
+	display: block;
+   font-weight:bold;
+   background:none;
+	text-decoration: none;
+   border-top:0px;
+   font-weight:bold;
+}
+
+.sidebar .nav > li > a > i{
+   margin-right:5px;
+}
+
+.sidebar .nav > li > ul > li > a {
+	font-size: 13px;
+	line-height: 20px;
+	padding: 8px 10px 8px 40px;
+	color: #999;
+   background:#fff;
+	display: block;
+	text-decoration: none;
+   border-top:0px;
+   font-weight:bold;
+}
+
+.sidebar .nav > li > ul > li.active > a{
+   background:#fff;
+   border-top:0px;
+   color:#555;
+}
+
+.sidebar .nav > li > ul > li > a:hover{
+   background:#fff;
+   color:#555;
+   border-bottom:0px;
+}
+
+.sidebar .nav li a:hover, .sidebar .nav li.current > a {
+	background: #fff;
+	color: #555;
+   border-bottom:0px;
+}
+
+.sidebar .nav li.open > a {
+   background:#fff;
+   color: #555;
+   border-bottom:1px dashed #eee;
+}
+
+.sidebar .nav a .caret {
+	float: right;
+	width: 0;
+	height: 0;
+	display: inline-block;
+	vertical-align: top;
+	border-top: 4px solid #aaa;
+	border-right: 4px solid transparent;
+	border-left: 4px solid transparent;
+	content: "";
+   margin-top: 8px;
+	margin-left: 2px;
+}
+
+.sidebar .nav a:hover .caret {
+	border-top-color: #aaa;
+}
+
+.sidebar .nav li.open > a > .caret {
+	border-top: none;
+	border-bottom: 4px solid #aaa !important;
+	border-right: 4px solid transparent;
+	border-left: 4px solid transparent;
+}
+
+.sidebar .nav li.open > a:hover > .caret {
+	border-bottom-color: #aaa;
+}
+
+.node {
+    cursor: pointer;
+  }
+
+  .overlay{
+      background-color:#fff;
+      background:
+      linear-gradient(-90deg, rgba(0, 0, 0, .03) 1px, transparent 1px),
+      linear-gradient(rgba(0, 0, 0, .03) 1px, transparent 1px),
+      linear-gradient(-90deg, rgba(0, 0, 0, .03) 1px, transparent 1px),
+      linear-gradient(rgba(0, 0, 0, .03) 1px, transparent 1px),
+      linear-gradient(transparent 3px, transparent 3px, transparent 78px, transparent 78px),
+      linear-gradient(-90deg, transparent 1px, transparent 1px),
+      linear-gradient(-90deg, transparent 3px, transparent 3px, transparent 78px, transparent 78px),
+      linear-gradient(transparent 1px, transparent 1px), transparent;
+      background-size:10px 10px,10px 10px,
+        10px 10px,
+        10px 10px,
+        10px 10px,
+        10px 10px,
+        10px 10px,
+        10px 10px;
+  }
+   
+  .node circle {
+    fill: #000;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+  }
+   
+  .node text {
+    font-size:12px; 
+    font-family:Tahoma;
+  }
+   
+  .link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 1.5px;
+  }
+
+  .templink {
+    fill: none;
+    stroke: red;
+    stroke-width: 3px;
+  }
+
+  .ghostCircle.show{
+      display:block;
+  }
+
+  .ghostCircle, .activeDrag .ghostCircle{
+       display: none;
+  }
+.removeIcon
+{
+  cursor:pointer;
+}
+.greyedText
+{
+  font-size:1.2em;
+  color:#bbbbbb;
+}
+.textList li {
+  margin-top:10px;
+}
+.dialog_content{
+  margin:10px 10px 10px 10px;
+}
+#userRow:hover{
+  cursor: pointer;
+  vertical-align: middle;
+}
+#crlRow:hover{
+ cursor: pointer; 
+}
+.iconButton:hover{
+  cursor: pointer; 
+}

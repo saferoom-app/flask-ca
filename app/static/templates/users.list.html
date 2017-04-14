@@ -1,0 +1,29 @@
+<table class="table table-striped" id="tblUsers">
+	<thead>
+		<th><input type="checkbox" id="selectAll"/></th>
+		<th>Name</th>
+		<th>Email</th>
+		<th>Subject DN</th>
+	</thead>
+	<tbody>
+		{{#each users}}
+		<tr id="userRow">
+			<td><input id="{{id}}" type="checkbox"/></td>
+			<td><a class="userLink" id="{{id}}" href="#">{{name}}</a></td>
+			<td>{{email}}</td>
+			<td>{{subject}}</td>						
+		</tr>
+		{{else}}
+			<tr>
+				<td colspan="10">
+					<div class="row">
+						<div class="col-md-12 greyedText" style="text-align:center">
+							 -- No users created yet -- 
+						</div>
+					</div>
+				</td>
+			</tr>
+		{{/each}}
+
+	</tbody>
+</table>

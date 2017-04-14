@@ -1,0 +1,42 @@
+<br/><div class="row">
+	<div class="col-md-12" style="margin:10px 10px 10px 10px">
+		<!-- Template name -->
+		<div>
+			<label>Include CRL: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="If option is enabled, then CRL Distribution Point will be included in the CA certificate. Also this CDP will be used by default by all certificates issued by this CA"></i></label>
+			<select style="width:95%" id="selectCRL" class="form-control">
+				<option value="0"> Don't include </option>
+				<option value="1"> Include </option>
+			</select>			
+		</div><br/>
+		<div>
+			<label>Full CRL: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="URL to download Full CRL. Generated automatically during CA creation"></i></label>
+			<input readonly="true" placeholder="-- Not included --" type="text" class="form-control" style="width:95%" id="txtFull" />
+		</div><br/>
+		<div>
+			<label>Delta CRL (Freshest): <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="URL to download the latest Delta CRL. Generated automatically during CA creation"></i></label>
+			<input readonly="true" placeholder="-- Not included --" type="text" class="form-control" style="width:95%" id="txtFreshest" />
+		</div><br/>
+		<div>
+			<label>Include AIA OCSP: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="If option is enabled, then AIA extension with OCSP URL will be included in the CA certificate. Also this AIA will be used by default by all certificates issued by this CA"></i></label>
+			<select style="width:95%" id="selectOCSP" class="form-control">
+				<option value="0"> Don't include </option>
+				<option value="1"> Include </option>
+			</select>			
+		</div><br/>
+		<div>
+			<label>OCSP URL: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="URL to send OCSP requests. Generated automatically during CA creation"></i></label>
+			<input readonly="true" placeholder="-- Not included --" type="text" class="form-control" style="width:95%" id="txtOCSP" />
+		</div><br/>
+		<div>
+			<label>Include AIA Issuers: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="If option is enabled, then AIA extension with Issuers URL will be included in the CA certificate. Also this AIA will be used by default by all certificates issued by this CA"></i></label>
+			<select style="width:95%" id="selectIssuers" class="form-control">
+				<option value="0"> Don't include </option>
+				<option value="1"> Include </option>
+			</select>			
+		</div><br/>
+		<div>
+			<label>Issuers URL: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="URL to download CA certificate. Generated automatically during CA creation"></i></label>
+			<input readonly="true" placeholder="-- Not included --" type="text" class="form-control" style="width:95%" id="txtIssuers" />
+		</div><br/>
+	</div>
+</div>

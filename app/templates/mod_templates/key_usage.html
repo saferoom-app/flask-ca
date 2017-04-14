@@ -1,0 +1,10 @@
+<div>
+	<label>Key Usage: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="The key usage extension defines the purpose (e.g., encipherment, signature, certificate signing) of the key contained in the certificate.  The usage restriction might be employed when a key that could be used for more than one operation is to be restricted" id="blah"></i></label>
+	<div>
+		<select class="selectpicker" id="ku" multiple style="width:100%">
+			{%for ku in key_usages%}
+				<option value="{{ku['value']}}">{{ku['name']}}</option>
+			{%endfor%}
+		</select>
+	</div>
+</div><br/>

@@ -1,0 +1,16 @@
+<div>
+	<label>Inherit from Issuing CA: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="If option is enabled, Authority Information Access information will be taken from Issuing CA profile. If option is disabled, you can specify custom AIA data" id="blah"></i></label>
+	<select class="form-control" id="txtAIAInh" style="width:90%">
+		<option value="0">Disabled</option>
+		<option value="1" selected="true">Enabled</option>
+	</select>
+</div><br/>
+<!-- Template description -->
+<div>
+	<label>OCSP URI: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="The id-ad-ocsp OID is used when revocation information for the certificate containing this extension is available using the Online    Certificate Status Protocol (OCSP)" id="blah"></i></label>
+	<input style="width:90%" type="text" maxlength="128" style="width:95%" placeholder="Type OCSP URI" class="form-control" id="txtOCSP" />
+</div><br/>	
+<div>
+	<label>CA Issuers URI: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="In a public key certificate, the id-ad-caIssuers OID is used when the additional information lists certificates that were issued to the CA that issued the certificate containing this extension" id="blah"></i></label>
+	<input style="width:90%" type="text" maxlength="128" style="width:95%" placeholder="Type CA Issuers URI" class="form-control" id="txtIssuers" />
+</div><br/>

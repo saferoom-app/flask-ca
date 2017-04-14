@@ -1,0 +1,10 @@
+<div>
+	<label>Extended Key Usage: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="This extension indicates one or more purposes for which the certified public key may be used, in addition to or in place of the basic purposes indicated in the key usage extension" id="blah"></i></label>
+	<div>
+		<select class="selectpicker" id="sku" multiple style="width:100%">
+			{%for eku in ext_key_usages%}
+				<option value="{{eku['value']}}">{{eku['name']}}</option>
+			{%endfor%}
+		</select>
+	</div>
+</div><br/>

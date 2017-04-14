@@ -1,0 +1,10 @@
+<h3>Template</h3><hr/>
+<div>
+	<label>Certificate template <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Template used to generate certificates" id="blah"></i></label>
+	<select class="form-control" id="txtTPL" style="width:50%">
+		<option value=""> -- Select certificate template -- </option>
+		{%for tpl in tpls%}
+			<option value="{{tpl.id}}">{{tpl.name}}</option>
+		{%endfor%}
+	</select><br/>
+</div><br/>

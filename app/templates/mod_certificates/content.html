@@ -1,0 +1,37 @@
+<br/>
+<div class="input-group">
+	<span  class="input-group-btn">
+        <button title="Generate new certificate" type="button" class="btn btn-default" aria-label="Left Align" id="btnGenerate">
+        	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Generate
+        </button>
+        <button style="margin-left:10px" title="Revoke selected certificate(s)" type="button" class="btn btn-default" aria-label="Left Align" id="btnRevoke">
+        	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Revoke
+        </button>        
+        <button style="margin-left:10px" title="Delete selected certificate(s)" type="button" class="btn btn-default" aria-label="Left Align" id="btnDelete">
+        	<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
+        </button>
+   </span>
+      
+</div><hr/>
+<div class="input-group">
+	<span  class="input-group-btn">
+        <select class="selectpicker" id="ca" multiple style="width:100%">
+        <option data-hidden="true" value="0" selected>Certificate Authority</option>
+        {%for ca in cas%}
+          <option value="{{ca['id']}}">{{ca['name']}}</option>
+        {%endfor%}
+        </select>
+        <select class="selectpicker" id="status" multiple style="width:100%">
+        	<option data-hidden="true" value="0" selected>Certificate status</option>
+       		{%for status in statuses%}
+            <option value="{{status['value']}}">{{status['name']}}</option>
+          {%endfor%}
+        </select>        
+   </span>
+   <input style="margin-left:10px;width:60%" placeholder="Type text to search" type="text" class="form-control" id="txtSearch">   
+   <button style="margin-left:10px" title="Apply filter" type="button" class="btn btn-default" aria-label="Left Align" id="btnFilter">
+        	<span class="glyphicon glyphicon-filter" aria-hidden="true"></span> Apply
+        </button>
+</div><hr/>
+{%include "panel.alert.html"%}
+<div id="certificateList"></div>

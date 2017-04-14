@@ -1,0 +1,56 @@
+<table class="table table-striped" id="tblCerts">
+	<thead>
+		<th><input type="checkbox" id="selectAll"/></th>
+		<th>Name</th>
+		<th>Serial number</th>
+		<th>Status</th>
+		<th>Comment</th>
+		<th>Action</th>
+	</thead>
+	<tbody>
+		{{#each certificates}}
+		<tr id="userRow">
+			<td><input id="{{id}}" type="checkbox"/></td>
+			<td><a href="#">{{name}}</a></td>
+			<td>{{serial}}</td>
+			<td>
+				{{#if_eq status "1"}}
+					<span class="label label-success">Active</span>
+				{{/if_eq}}
+				{{#if_eq status "2"}}
+					<span class="label label-danger">{{code}}</span>
+				{{/if_eq}}
+				{{#if_eq status "3"}}
+					<span class="label label-warning">Paused</span>
+				{{/if_eq}}
+				{{#if_eq status "4"}}
+					<span class="label label-danger">Expired</span>
+				{{/if_eq}}				
+			</td>
+			<td>{{reason}}</td>
+			<td>
+				<button title="Download certificate(public key)" id="btnDownloadPub" data="{{id}}" class="btn btn-primary">Public Key</button>
+				<button id="btnDownloadPFX" title="Download PFX (public and private key pair protected by the password)" data="{{id}}" class="btn btn-primary">PFX</button>{{#if_eq status "3"}}
+					<button id="btnRestore" title="Restore the certificate if it was paused (revoked with reason 'Certificate Hold')" data="{{id}}" class="btn btn-primary">Restore</button>
+				{{/if_eq}}
+			</td>
+		</tr>
+		{{else}}
+			<tr>
+				<td colspan="10">
+					<div class="row">
+						<div class="col-md-12 greyedText" style="text-align:center">
+							 -- No certificates generated yet -- 
+						</div>
+					</div>
+				</td>
+			</tr>
+		{{/each}}
+
+	</tbody>
+</table>
+<ul class="pagination">
+	{{#times pages}}
+		<li id='page_{{this}}'><a href="#">{{this}}</a></li>
+	{{/times}}
+</ul>

@@ -1,0 +1,25 @@
+<div>
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table table-striped" id="tblSelectUsers" style="table-layout: fixed; width: 100%">
+			<thead>
+				<th style="width:5%"><input type="checkbox" id="selectAll"/></th>
+				<th>Name</th>
+				<th>Email</th>
+				<th style="width:40%">Subject DN</th>
+			</thead>
+			<tbody>
+			{% for user in users%}
+				<tr>
+					<td><input id="{{user.id}}" type="checkbox"/></td>
+					<td id='userName'>{{user.name}}</td>
+					<td id='userEmail'>{{user.email}}</td>
+					<td id='userDN' style="word-wrap: break-word">{{user.subject}}</td>						
+				</tr>
+			{%endfor%}
+			</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<input type="hidden" id="txtOP" value="{{op}}"/>

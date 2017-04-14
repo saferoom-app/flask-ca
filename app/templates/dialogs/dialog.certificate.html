@@ -1,0 +1,61 @@
+<div class="dialog_content">
+	{%include "panel.alert.html"%}
+	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+		<div class="panel panel-default">
+			<div class="panel-heading" role="tab" id="headerGeneral">
+				<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseGeneral" aria-expanded="true" aria-controls="collapseGeneral">General</a></h4>
+			</div>
+			<div id="collapseGeneral" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headerGeneral">
+				<div class="panel-body">
+					 <div class="row">
+					 	<div class="col-md-12">
+					 		<ul class="list-group">
+  								<li class="list-group-item"><strong>Name:</strong> {{certificate.name}}</li>
+  								<li class="list-group-item"><strong>Serial number:</strong> {{certificate.serial}}</li>
+  								<li class="list-group-item"><strong>Status:</strong>
+  								{%if certificate.status == 1%}
+  									<span style="font-size:1em" class="label label-success">Active</span>
+  								{%elif certificate.status == 2 %}
+  									<span style="font-size:1em" class="label label-danger">Revoked</span>
+  								{%elif certificate.status == 3 %}
+  									<span style="font-size:1em" class="label label-warning">Paused</span>
+  								{%elif certificate.status == 4 %}
+  									<span style="font-size:1em" class="label label-danger">Expired</span>
+  								{%endif%}
+  								</li>
+  								<li class="list-group-item"><strong>Comment:</strong> {{certificate.reason_revoke}}
+  							</ul>
+					 	</div>
+					 </div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading" role="tab" id="headerPublic">
+				<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsePublic" aria-expanded="true" aria-controls="collapsePublic">Public Key</a></h4>
+			</div>
+			<div id="collapsePublic" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headerPublic">
+				<div class="panel-body">
+					 <textarea rows="10" class="form-control">
+					 	{{certificate.public}}
+					 </textarea>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading" role="tab" id="headerP12">
+				<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseP12" aria-expanded="true" aria-controls="collapseP12">PFX</a></h4>
+			</div>
+			<div id="collapseP12" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headerP12">
+				<div class="panel-body">
+					 <textarea rows="10" class="form-control">
+					 	{{certificate.p12}}
+					 </textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$("[rel=tooltip]").tooltip({ placement: 'right'});$("div#panelAlert").hide();$('.collapse').collapse();
+</script>

@@ -1,0 +1,5 @@
+<select id="txtTpl" class="form-control">
+	{% for template in templates%}
+		<option value="{{template['id']}}">{{template['name']}}</option>
+	{%endfor%}
+</select>

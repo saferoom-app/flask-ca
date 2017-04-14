@@ -1,0 +1,149 @@
+<h3>General</h3><hr/>
+<div class="alert alert-warning alert-dismissible" id="panelAlert" role="alert">
+	<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button><span id="alertMessage"></span>
+</div>
+<!-- General  -->
+<div class="row">
+	<div class="col-md-12" style="margin:0px 20px 20px 20px">
+	    <div>
+			<label>Name: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Template's descriptive name" id="blah"></i></label>
+	    	<input type="text" style="width:80%" class="form-control" id="txtName" value="{{template.name}}"/>
+	    </div><br/>
+	    <div>
+			<label>Description: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Template's brief description" id="blah"></i></label>
+	    	<textarea rows="5" style="width:80%" class="form-control" id="txtDscr">{{template.dscr}}</textarea>
+	    </div><br/>
+	    <div>
+			<label>Subject Alternative name: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="The subject alternative name extension allows identities to be bound to the subject of the certificate.  These identities may be included in addition to or in place of the identity in the subject field of the certificate" id="blah"></i></label>
+	    	<input type="text" style="width:80%" class="form-control" id="txtAltName" value="{{template.extensions.altname}}"/>
+	    </div><br/>
+	    <div>
+			<label>Key Length: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Key Length for generated certificates" id="blah"></i></label>
+	    	<select class="form-control" id="txtKeylen" style="width:80%">
+	    		<option {{#if_eq template.extensions.keylen "512"}}selected{{/if_eq}} value="512">512 bits</option>
+	    		<option {{#if_eq template.extensions.keylen "1024"}}selected{{/if_eq}} value="1024">1024 bits</option>
+	    		<option {{#if_eq template.extensions.keylen "2048"}}selected{{/if_eq}} value="2048">2048 bits</option>
+	    		<option {{#if_eq template.extensions.keylen "4096"}}selected{{/if_eq}} value="4096">4096 bits</option>
+	    		<option {{#if_eq template.extensions.keylen "8192"}}selected{{/if_eq}} value="8192">8192 bits</option>
+	    	</select>
+	    </div><br/>
+	</div>
+</div>
+<h3>Extensions</h3><hr/>
+<div class="row">
+	<div class="col-md-12" style="margin:0px 20px 20px 20px">
+	    <!-- Key Usages -->
+	    <div>
+			<label>Key Usage: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="The key usage extension defines the purpose (e.g., encipherment, signature, certificate signing) of the key contained in the certificate.  The usage restriction might be employed when a key that could be used for more than one operation is to be restricted" id="blah"></i></label>
+			<div>
+				<select class="selectpicker" id="ku" multiple style="width:100%">
+					{{#each key_usages}}
+						<option value="{{value}}">{{name}}</option>
+					{{/each}}
+				</select>
+			</div>
+		</div><br/>
+	    <div>
+			<label>Extended Key Usage: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="This extension indicates one or more purposes for which the certified public key may be used, in addition to or in place of the basic purposes indicated in the key usage extension" id="blah"></i></label>
+			<div>
+				<select class="selectpicker" id="sku" multiple style="width:100%">
+					{{#each ext_key_usages}}
+						<option value="{{value}}">{{name}}</option>
+					{{/each}}
+				</select>
+			</div>
+		</div><br/>
+	    <div>
+			<label>Certificate policies: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="The certificate policies extension contains a sequence of one or more policy information terms, each of which consists of an object identifier (OID) and optional qualifiers.  Optional qualifiers, which MAY be present, are not expected to change the definition of the policy" id="blah"></i></label>
+			<div>
+				<div class="input-group" style="width:80%">
+					<input type="text" class="form-control" id="txtPolicyID" placeholder="Specify Policy ID">
+						<span class="input-group-btn"><button class="btn btn-default" id="btnAddPolicy" type="button">Add</button>
+						</span>
+				</div>
+			<div>
+				<table class="table" id="tblPolicies" style="width:80%">
+					<thead>
+						<th width="10%">#</th>
+						<th>Policy ID</th>
+					</thead>
+					<tbody id="tbodyPolicies">
+						{{#each template.extensions.policies}}
+							<tr>
+								<td><span class="glyphicon glyphicon-remove removeIcon" aria-hidden="true"></span></td>
+								<td id="tdPolicy">{{this}}</td>
+							</tr>
+						{{/each}}
+					</tbody>
+				</table>
+			</div>
+			</div>
+		</div><br/>
+	</div>
+</div>
+<h3>CRL information</h3><hr/>
+<div class="row">
+	<div class="col-md-12" style="margin:0px 20px 20px 20px">
+	    <!-- Key Usages -->
+	    <div>
+			<label>Inherit from Issuing CA: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="If option is enabled, CRL Distribution Points will be taken from Issuing CA profile. If option is disabled, you can specify custom CRL Distribution point" id="blah"></i></label>
+			<select class="form-control" id="txtCRLInh" style="width:80%">
+				<option {{#if_eq template.extensions.crl.inherit "0"}}selected{{/if_eq}} value="0">Disabled</option>
+				<option {{#if_eq template.extensions.crl.inherit "1"}}selected{{/if_eq}} value="1">Enabled</option>
+			</select>
+		</div><br/>
+		<!-- Template description -->
+		<div>
+			<label>CRL Distribution Point: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="The CRL distribution points extension identifies how CRL information is obtained" id="blah"></i></label>
+			<input style="width:80%" type="text" value="{{template.extensions.crl.full}}" maxlength="128" placeholder="Type CRL Distribution Point" class="form-control" id="txtCRL" />
+		</div><br/>	
+		<div>
+			<label>Delta CRL Distribution Point: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="The CRL distribution points extension identifies how Delta CRL (FreshestCRL) information is obtained" id="blah"></i></label>
+			<input value="{{template.extensions.crl.freshest}}" type="text" maxlength="128" style="width:80%" placeholder="Type CRL Distribution Point" class="form-control" id="txtFreshest" />
+		</div><br/>
+	</div>
+</div>
+<h3>AIA information</h3><hr/>
+<div class="row">
+	<div class="col-md-12" style="margin:0px 20px 20px 20px">
+	    <!-- Key Usages -->
+	    <div>
+			<label>Inherit from Issuing CA: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="If option is enabled, Authority Information Access information will be taken from Issuing CA profile. If option is disabled, you can specify custom AIA data" id="blah"></i></label>
+			<select class="form-control" id="txtAIAInh" style="width:80%">
+				<option {{#if_eq template.extensions.aia.inherit "0"}}selected{{/if_eq}} value="0">Disabled</option>
+				<option {{#if_eq template.extensions.aia.inherit "1"}}selected{{/if_eq}} value="1">Enabled</option>
+			</select>
+		</div><br/>
+		<!-- Template description -->
+		<div>
+			<label>OCSP URI: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="The id-ad-ocsp OID is used when revocation information for the certificate containing this extension is available using the Online    Certificate Status Protocol (OCSP)" id="blah"></i></label>
+			<input value="{{template.extensions.aia.ocsp}}" style="width:80%" type="text" maxlength="128" placeholder="Type OCSP URI" class="form-control" id="txtOCSP" />
+		</div><br/>	
+		<div>
+			<label>CA Issuers URI: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="In a public key certificate, the id-ad-caIssuers OID is used when the additional information lists certificates that were issued to the CA that issued the certificate containing this extension" id="blah"></i></label>
+			<input value="{{template.extensions.aia.issuers}}" type="text" maxlength="128" style="width:80%" placeholder="Type CA Issuers URI" class="form-control" id="txtIssuers" />
+		</div><br/>
+	</div>
+</div><hr/>
+<div class="row">
+	<div class="col-md-12">
+		<button style="margin-right:10px" title="Update existing template" type="button" class="btn btn-primary" aria-label="Left Align" id="btnUpdate">
+        	<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Update
+        </button>
+		<button style="margin-right:10px" title="Save updated template as a new template" type="button" class="btn btn-primary" aria-label="Left Align" id="btnSave">
+        	<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save as new
+        </button>
+        <button style="margin-right:10px" title="Delete existing template" type="button" class="btn btn-primary" aria-label="Left Align" id="btnDelete">
+        	<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
+        </button>
+        <button style="margin-right:10px" title="Cancel the update operation and go back to the list of templates" type="button" class="btn btn-default" aria-label="Left Align" id="btnCancel">
+        	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel
+        </button>
+	</div>
+</div><br/>
+
+<script>
+	$('.selectpicker').selectpicker('refresh');
+	$("[rel=tooltip]").tooltip({ placement: 'right'});
+	$("div#panelAlert").hide();
+</script>

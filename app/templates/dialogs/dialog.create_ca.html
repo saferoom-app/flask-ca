@@ -1,0 +1,34 @@
+<div>
+	{%include "panel.alert.html"%}
+	<!-- Nav tabs -->
+	<ul class="nav nav-tabs" role="tablist">
+		<li role="presentation" class="active"><a href="#general" aria-controls="general" role="tab" data-toggle="tab">General</a></li>
+		<li role="presentation"><a href="#hiera" aria-controls="hiera" role="tab" data-toggle="tab">Hierarchy</a></li>
+		<li role="presentation"><a href="#security" aria-controls="security" role="tab" data-toggle="tab">Security</a></li>
+		<li role="presentation"><a href="#crl" aria-controls="crl" role="tab" data-toggle="tab">CRL and OCSP</a></li>
+		<li role="presentation"><a href="#subject" aria-controls="subject" role="tab" data-toggle="tab">Subject DN</a></li>
+	</ul>
+	<!-- Tab panes -->
+	<div class="tab-content">
+		<div role="tabpanel" class="tab-pane active" id="general">
+			{%include "mod_ca/general.html"%}
+		</div>
+		<div role="tabpanel" class="tab-pane" id="hiera">
+			{%include "mod_ca/hiera.html"%}
+		</div>
+		
+		<div role="tabpanel" class="tab-pane" id="security">
+			{%include "mod_ca/security.html"%}
+		</div>
+		<div role="tabpanel" class="tab-pane" id="crl">
+			{%include "mod_ca/crl.html"%}
+		</div>
+		<div role="tabpanel" class="tab-pane" id="subject">
+			{%include "mod_ca/subject.html"%}
+		</div>
+	</div>
+</div>
+<script>
+	$("[rel=tooltip]").tooltip({ placement: 'right'});
+	$("div#panelAlert").hide();
+</script>

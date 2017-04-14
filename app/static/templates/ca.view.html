@@ -1,0 +1,71 @@
+<h3>{{ca.name}}</h3><hr/>
+<div class="alert alert-warning alert-dismissible" id="panelAlert" role="alert">
+	<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button><span id="alertMessage"></span>
+</div>
+<!-- General  -->
+<div class="row">
+	<div class="col-md-12" style="margin:0px 20px 20px 20px">
+	    <div>
+			<label>Name: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Certificate Authority's name" id="blah"></i></label>
+	    	<input type="text" style="width:80%" class="form-control" id="txtName" value="{{ca.name}}"/>
+	    </div><br/>
+	    <div>
+			<label>Description: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Certificate Authority's brief description" id="blah"></i></label>
+	    	<textarea rows="5" style="width:80%" class="form-control" id="txtDscr">{{ca.dscr}}</textarea>
+	    </div><br/>
+	    <div>
+			<label>Expires: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Certificate Authority's expiration date" id="blah"></i></label>
+	    	<div style="margin-top:10px"><span class="label label-primary" style="font-size:1.3em">{{ca.expires}}</span></div>
+	    </div><br/>
+	    <div>
+			<label>CRL Distribution Point: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Certificate Authority's Certificate Distribution Point" id="blah"></i></label>
+	    	<input type="text" readonly="true" style="width:80%" class="form-control" id="txtName" value="{{ca.extensions.crl}}"/>
+	    </div><br/>
+	    <div>
+			<label>OCSP Responder URL: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="OCSP Responder URL" id="blah"></i></label>
+	    	<input type="text" readonly="true" style="width:80%" class="form-control" id="txtName" value="{{ca.extensions.ocsp}}"/>
+	    </div><br/>
+	    <div>
+			<label>AIA Issuers URL: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Certificate Authority's AIA Issuers URL" id="blah"></i></label>
+	    	<input type="text" readonly="true" style="width:80%" class="form-control" id="txtName" value="{{ca.extensions.issuers}}"/>
+	    </div><br/>
+	</div>
+</div>
+<h3>CRL</h3><hr/>
+<div class="row">
+	<div class="col-md-12" style="margin:20px 20px 20px 20px">
+		<table class="table table-striped" style="width:80%">
+			<thead>
+				<th>Name</th>
+				<th>Created</th>
+				<th>Actions</th>
+			</thead>
+			<tbody>
+				{{#each ca.crls}}
+					<tr id="{{id}}">
+						<td>CRL #{{id}}</td>
+						<td>{{created}}</td>
+						<td>
+							<span style="margin-right:10px" title="Download CRL" class="glyphicon glyphicon-download iconButton" aria-hidden="true" id="btnDownload"></span>
+							<span title="Remove CRL" class="glyphicon glyphicon-remove iconButton" aria-hidden="true" id="btnRemove"></span>
+						</td>
+					</tr>
+				{{else}}
+					<tr>
+						<td colspan="10">
+							<div class="row">
+								<div class="col-md-12 greyedText" style="text-align:center">
+									 -- No CRL generated yet -- 
+								</div>
+							</div>
+						</td>
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+</div><br/><br/>
+<script>
+	$("[rel=tooltip]").tooltip({ placement: 'right'});
+	$("div#panelAlert").hide();
+</script>

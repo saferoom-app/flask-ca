@@ -1,0 +1,16 @@
+<table class="table table-striped">
+	<thead>
+		<th><input type="checkbox" id="selectAll"/></th>
+		<th>Name</th>
+		<th>Description</th>		
+	</thead>
+	<tbody>
+		{% for template in templates%}
+		<tr>
+			<td><input id="{{template['id']}}" type="checkbox"/></td>
+			<td><a class="tpl_link" href="/tpls/view/{{template['id']}}/">{{template['name']}}</a></td>
+			<td>{{template['dscr']}}</td>
+		</tr>
+		{%endfor%}
+	</tbody>
+</table>

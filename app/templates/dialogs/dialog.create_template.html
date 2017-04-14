@@ -1,0 +1,28 @@
+<div>
+	<div class="alert alert-warning alert-dismissible" id="panelAlert" role="alert">
+		<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button><span id="alertMessage"></span>
+	</div>
+<!-- Nav tabs -->
+	<ul class="nav nav-tabs" role="tablist">
+		<li role="presentation" class="active"><a href="#general" aria-controls="general" role="tab" data-toggle="tab"><strong>General</strong></a></li>
+		<li role="presentation"><a href="#exts" aria-controls="exts" role="tab" data-toggle="tab">Extensions</a></li>
+		<li role="presentation"><a href="#crl" aria-controls="crl" role="tab" data-toggle="tab">CRL</a></li>
+		<li role="presentation"><a href="#ocsp" aria-controls="ocsp" role="tab" data-toggle="tab">OCSP</a></li>
+	</ul>
+	<!-- Tab panes -->
+	<div class="tab-content">
+		<div role="tabpanel" class="tab-pane active" id="general">
+			{%include "dialogs/dialog.create_template.general.html"%}
+		</div>
+		<div role="tabpanel" class="tab-pane" id="exts">
+			{%include "dialogs/dialog.create_template.extensions.html"%}
+		</div>
+		<div role="tabpanel" class="tab-pane" id="crl">
+			{%include "dialogs/dialog.create_template.crl.html"%}
+		</div>
+		<div role="tabpanel" class="tab-pane" id="ocsp">
+			{%include "dialogs/dialog.create_template.ocsp.html"%}
+		</div>
+	</div>
+</div>
+

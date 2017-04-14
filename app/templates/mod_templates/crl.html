@@ -1,0 +1,16 @@
+<div>
+	<label>Inherit from Issuing CA: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="If option is enabled, CRL Distribution Points will be taken from Issuing CA profile. If option is disabled, you can specify custom CRL Distribution point" id="blah"></i></label>
+	<select class="form-control" id="txtCRLInh" style="width:90%">
+		<option value="0">Disabled</option>
+		<option value="1" selected="true">Enabled</option>
+	</select>
+</div><br/>
+<!-- Template description -->
+<div>
+	<label>CRL Distribution Point: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="The CRL distribution points extension identifies how CRL information is obtained" id="blah"></i></label>
+	<input style="width:90%" type="text" maxlength="128" style="width:95%" placeholder="Type CRL Distribution Point" class="form-control" id="txtCRL" />
+</div><br/>	
+<div>
+	<label>Delta CRL Distribution Point: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="The CRL distribution points extension identifies how Delta CRL (FreshestCRL) information is obtained" id="blah"></i></label>
+	<input style="width:90%" type="text" maxlength="128" style="width:95%" placeholder="Type CRL Distribution Point" class="form-control" id="txtFreshest" />
+</div><br/>

@@ -1,0 +1,20 @@
+<div class="dialog_content">
+	{%include "panel.alert.html"%}
+	<div>
+		<label>Revocation reason:</label>
+		<select class="form-control" id="txtReason" style="width:95%">
+			{%for key in reasons.keys()%}
+				{%if key != "-1"%}
+				<option value="{{key}}">{{reasons[key]}} ({{key}})</option>				
+				{%endif%}
+			{%endfor%}
+		</select>
+	</div><br/>
+	<div>
+		<label>Comment:</label>
+		<textarea class="form-control" placeholder="Provide comments if any" id="txtComment" style="width:95%" rows="10"></textarea>
+	</div><br/>
+</div>
+<script>
+	$("[rel=tooltip]").tooltip({ placement: 'right'});$("div#panelAlert").hide();
+</script>

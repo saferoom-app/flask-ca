@@ -1,0 +1,32 @@
+<br/><div class="row">
+	<div class="col-md-12" style="margin:10px 10px 10px 10px">
+		<!-- Template name -->
+		<div>
+			<label>Password: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Specify the password that will be used to encrypt Certificate Authority private key. Please remember this password since it's not saved anywhere"></i></label>
+			<input type="password" maxlength="128" style="width:95%" placeholder="Specify password to encrypt private key" class="form-control" id="txtPassword" />
+		</div><br/>
+		<div>
+			<label>Validity (months): <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Specify the number of months the Certificate Authority will be valid"></i></label>
+			<input type="number" value="1" min="1" max="120" style="width:30%" class="form-control" id="txtValid" />
+		</div><br/>
+		<div>
+			<label>Key length: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Key length defines how strong will be the Certificate Authority key. The bigger the length the more secure will be your key."></i></label>
+			<select style="width:30%" class="form-control" id="txtKeylen">
+				<option value="512">512 bits</option>
+				<option value="1024">1024 bits</option>
+				<option value="2048">2048 bits</option>
+				<option value="4096">4096 bits</option>
+				<option value="8192">8192 bits</option>
+			</select>
+		</div><br/>
+		<div>
+			<label>Hash Algorithm: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Select the hashing algorithm"></i></label>
+			<select style="width:30%" class="form-control" id="txtHash">
+				<option value="sha1">SHA1</option>
+				<option value="sha2">SHA2</option>
+				<option value="sha256">SHA256</option>				
+			</select>
+		</div><br/>
+
+	</div>
+</div>

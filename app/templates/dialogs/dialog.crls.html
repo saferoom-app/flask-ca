@@ -1,0 +1,21 @@
+<div>
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table table-striped" id="tblSelectUsers" style="table-layout: fixed; width: 100%">
+			<thead>
+				<th>Name</th>
+				<th style="width:50%">Created</th>
+			</thead>
+			<tbody>
+			{% for crl in crls%}
+				<tr id="crlRow" data="{{crl.id}}">
+					<td>CRL #{{crl.id}}</td>
+					<td >{{crl.created}}</td>									
+				</tr>
+			{%endfor%}
+			</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<input type="hidden" id="txtOP" value="{{op}}"/>

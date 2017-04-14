@@ -1,0 +1,9 @@
+<div class="sidebar content-box" style="display: block;">
+    <ul class="nav">
+    <!-- Main menu -->
+        <li {%if active=="ca"%}class="current"{%endif%}><a href="/"><i class="glyphicon glyphicon-home"></i> Certificate Authorities</a></li>
+        <li {%if active=="users"%}class="current"{%endif%}><a href="/users"><i class="glyphicon glyphicon-user"></i> Users</a></li>
+        <li {%if active=="cert"%}class="current"{%endif%}><a href="/certificates"><i class="fa fa-id-card-o" aria-hidden="true"></i> Certificates</a></li>
+        <li {%if active=="tpl"%}class="current"{%endif%}><a href="/tpls"><i class="fa fa-files-o" aria-hidden="true"></i> Templates</a></li>
+    </ul>
+</div>

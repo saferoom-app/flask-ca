@@ -1,0 +1,15 @@
+{%extends "layout.html"%}
+{%block body%}
+	<div class="row">
+		<div class="col-md-3" style="">
+			{%include "nav.html"%}
+		</div>
+		<div class="col-md-9">
+			{%include "mod_ca/content.html"%}
+		</div>
+	</div>
+{%endblock%}
+{%block scripts%}
+	<script type="text/javascript" src="/static/js/classes/class.ca.js"></script>
+	<script type="text/javascript" src="/static/js/ca.js"></script>
+{%endblock%}

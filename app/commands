@@ -1,0 +1,4 @@
+# Creating users
+python cli.py user create --name "Ilia Zelenkin" --email ilia.zelenkin@gmail.com --country US --state NY
+python cli.py user create --name "Andrey Zelenkin" --email ilia.zelenkin@gmail.com --country US --state NY
+python cli.py user create --name "Ilia Zelenkin" --email ilia.zelenkin@gmail.com --country US --state NY

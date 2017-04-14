@@ -1,0 +1,30 @@
+<br/><div class="row">
+	<div class="col-md-12" style="margin:10px 10px 10px 10px">
+		<div>
+			<label>Subject DN: <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Subject DN value. Filled automatically based on specified values"></i></label>
+			<input type="text" readonly="true" maxlength="128" style="width:95%" placeholder="" class="form-control" id="txtSubject" value="" />
+		</div><br/>
+
+		<div>
+			<label>Country (optional): <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Specify the country for this CA. This value will be used as 'C=' value in the Subject DN field"></i></label>
+			{%include "countries.html"%}
+		</div><br/>
+
+		<div>
+			<label>Company (optional): <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Specify the company name for this CA. This value will be used as 'O=' value in the Subject DN field"></i></label>
+			<input type="text" maxlength="128" style="width:95%" placeholder="Specify company's name" class="form-control" id="txtO" />
+		</div><br/>
+		<div>
+			<label>Department (optional): <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Specify the department name for this CA. This value will be used as 'OU=' value in the Subject DN field"></i></label>
+			<input type="text" maxlength="128" style="width:95%" placeholder="Specify company's name" class="form-control" id="txtOU" />
+		</div><br/>
+		<div>
+			<label>State (optional): <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Specify the state for this CA. This value will be used as 'ST=' value in the Subject DN field"></i></label>
+			<input type="text" maxlength="128" style="width:95%" placeholder="Specify state" class="form-control" id="txtST" />
+		</div><br/>
+		<div>
+			<label>City (optional): <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Specify city for this CA. This value will be used as 'L=' value in the Subject DN field"></i></label>
+			<input type="text" maxlength="128" style="width:95%" placeholder="Specify city" class="form-control" id="txtL" />
+		</div><br/>
+	</div>
+</div>

@@ -1,0 +1,27 @@
+<br/><div class="row">
+	<div class="col-md-12" style="margin:10px 10px 10px 10px">
+		<div>
+			<h3>Users</h3><hr/>
+			<table class="table">
+				<thead>
+						<th>Name <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="THis value will be used as CN field in the Subject DN field. In case SSL Server certificates, here you need to specify the hostname: Examples: www.somesite.com, *.somesite.com"></i></th>
+						<th>Email <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Optional value. This value will be used as 'E=' field in the Subject DN field"></i></th>
+						<th>Country<i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Optional. This value will be used as 'C=' field in the Subject DN field"></i></th>
+						<th>Subject DN <i class="fa fa-info-circle" aria-hidden="true" rel="tooltip" title="Optional. This value will be used as 'C=' field in the Subject DN field"></i></th>
+
+				</thead>
+				<tbody>
+					<tr>
+						<td><input type="text" placeholder="Common name" class="form-control" id="txtCN"/></td>
+						<td><input type="text" class="form-control" id="txtCN"/></td>
+						<td>{% include "countries.html" %}</td>						
+						
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<script>
+	$("[rel=tooltip]").tooltip({ placement: 'right'});$("div#panelAlert").hide();
+</script>
