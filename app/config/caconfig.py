@@ -70,6 +70,7 @@ error_cert_status = "Certificate is not in [Paused] status"
 error_nocerts_revoked = "There are not revoked certificates for this CA. CRL won't be generated"
 error_rootca_notfound = "Root CA [ID=%s] not found"
 error_crl_notfound = "CRL not found"
+error_db_init = "Error while initializing the database: %s. Click on button below to continue"
 
 
 # Server info messages
@@ -85,6 +86,7 @@ msg_user_updated = "User has been successfully updated"
 msg_users_deleted = "Selected users have been successfully deleted"
 msg_crl_generated = "CRL has been successfully generated"
 msg_crl_deleted = "CRL has been successfully deleted"
+msg_db_init = "Database has been successfully initialized. Click on button below to continue"
 
 # Status messages
 status_generate_cert = "Generating certificate for %s"

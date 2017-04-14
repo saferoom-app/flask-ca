@@ -109,9 +109,6 @@ if option.which == "template":
 
         # Checking if name is specified
         template = {}
-        if not option.name:
-            print_message(config.error_name_mandatory)
-            exit()
 
         # Checking if file is specified
         if option.file:
@@ -123,6 +120,10 @@ if option.which == "template":
             if not template:
                 exit()
         else:
+            if not option.name:
+                print_message(config.error_name_mandatory)
+                exit()
+
             # Getting the template data from CLI params
             template = CertificateTemplate.from_option(option)
             if not template:

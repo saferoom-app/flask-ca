@@ -26,7 +26,7 @@ ocsp = http://127.0.0.1:5000/<caid>/aia/ocsp
 
 [policy]
 ; List of comma-separated Certificate policies
-policies = 1.1.1.1.1.1,2.2.2.2.2.2.2
+policies = 
 
 [keylen]
 length = 2048

@@ -47,8 +47,14 @@ def start_app():
 
 @app.route("/init")
 def init():
-	init_db()
-	return ""
+    try:
+        1/0
+        init_db()
+        return render_template("db.result.html",error=False,message=caconfig.msg_db_init)
+    except Exception as e:
+        return render_template("db.result.html",error=True,message=caconfig.error_db_init % str(e))
+
+	
 
 @app.route("/status/<string:sid>")
 def get_operation_status(sid):

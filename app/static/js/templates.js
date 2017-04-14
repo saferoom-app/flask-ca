@@ -1,3 +1,4 @@
+var rowItems;
 $(document).ready(function(){
 	// Listing templates
 	list_templates();
@@ -14,6 +15,7 @@ function list_templates(){
 		$.get("/static/templates/templates.list.html",function(template){
 			tplList = Handlebars.compile(template);
 			$("#templatesList").html(tplList(response));
+			rowItems = $("table#tblTpls tr");
 		});
 	})
 	.fail(function(xhr){
@@ -67,5 +69,12 @@ $( document ).ajaxComplete(function(event,xhr,settings) {
   		case "/tpls/delete":list_templates();break;
   		case "/tpls/create":$("#modalDialog").modal("hide");list_templates();break;
   	}
+});
+$(document).on("keyup","input#txtSearch",function(){
+	var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+	rowItems.show().filter(function() {
+		var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+		return !~text.indexOf(val);
+	}).hide();
 });
 
