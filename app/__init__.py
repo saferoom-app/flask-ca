@@ -40,6 +40,11 @@ def shutdown_session(exception=None):
 def index_page():
 	return redirect(url_for("mod_ca.ca_index_page"))
 
+@app.route("/start",methods=["GET"])
+def start_app():
+    return render_template("start.html",pageTitle="Saferoom CA :: Getting started")
+    
+
 @app.route("/init")
 def init():
 	init_db()
