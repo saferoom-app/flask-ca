@@ -2,8 +2,9 @@
 Lightweight Certificate Authority with REST API
 
 # Features
-Saferoom CA features the following:
-- Creating Certificate Authorities of any hierarchical structure (Root, Intermediate)
-- Certificate templates to generate custom certificates with custom extensions
-- CRL
-- OCSP Responder functionality
+to be defined
+
+# Installation
+This application can be installed manually or run as a Docker container. See the corresponding section below
+## Docker
+## Manual
