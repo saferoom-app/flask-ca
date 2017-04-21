@@ -48,7 +48,6 @@ def start_app():
 @app.route("/init")
 def init():
     try:
-        1/0
         init_db()
         return render_template("db.result.html",error=False,message=caconfig.msg_db_init)
     except Exception as e:
