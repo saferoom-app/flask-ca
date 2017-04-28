@@ -33,6 +33,10 @@ function button_handler(event){
 			create_template();
 			break;
 		case "btnDelete":
+			if ($("input[id!='selectAll']:checked").length == 0){
+				show_alert(TYPE_ERROR,"Select at least one template to delete");
+				return;
+			}
 			if (window.confirm("Are you sure that you want to delete selected template(s)?")){
 				delete_templates();} 			
 			break;
@@ -51,6 +55,7 @@ function create_template()
 }
 
 function delete_templates(){
+
 	tpls = new Array();
 	$("input[id!='selectAll']:checked").each(function(){tpls.push(this.id);});
 	Template.delete(tpls);

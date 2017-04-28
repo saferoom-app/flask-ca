@@ -81,3 +81,6 @@ def get_certificate(cid):
     # Sending response
     return render_template("dialogs/dialog.certificate.html",certificate=cert)
 
+@mod_modal.route("/deleteca")
+def dialog_deleteca():
+    return render_template("dialogs/dialog.ca.delete.html")

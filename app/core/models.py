@@ -1,5 +1,5 @@
 # Import section
-from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, DateTime, Table, Text
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, DateTime, Table, Text,LargeBinary
 from database import Base
 from sqlalchemy.orm import relationship
 from OpenSSL import crypto, SSL
@@ -19,7 +19,7 @@ class CertificateAuthority(Base):
     # Relationships
     keys = relationship('Key',cascade="all,delete")
     certificates = relationship("Certificate",cascade="all,delete")
-    crls = relationship("CRL")
+    crls = relationship("CRL",cascade="all,delete")
 
     def __init__(self,name=None,subject_dn=""):
         self.name = name
@@ -84,11 +84,11 @@ class Key(Base):
         if root_ca is not None:
             ca_cert.set_issuer(root_ca.get_subject())
             ca_cert.add_extensions([crypto.X509Extension(config.extensions['bc'], True,"CA:TRUE"),\
-                crypto.X509Extension(config.extensions['ku'], True,"keyCertSign, cRLSign"),crypto.X509Extension(config.extensions['ski'], False, "hash",subject=ca_cert),crypto.X509Extension(config.extensions['aki'], False,'keyid,issuer', issuer=root_ca)])
+                crypto.X509Extension(config.extensions['ku'], True,"digitalSignature,keyCertSign, cRLSign"),crypto.X509Extension(config.extensions['ski'], False, "hash",subject=ca_cert),crypto.X509Extension(config.extensions['aki'], False,'keyid,issuer', issuer=root_ca)])
         else:
             ca_cert.set_issuer(ca_cert.get_subject())
             ca_cert.add_extensions([crypto.X509Extension(config.extensions['bc'], True,"CA:TRUE"),\
-                crypto.X509Extension(config.extensions['ku'], True,"keyCertSign, cRLSign"),crypto.X509Extension(config.extensions['eku'], True,"OCSPSigning"),crypto.X509Extension(config.extensions['ski'], False, "hash",subject=ca_cert),crypto.X509Extension(config.extensions['aki'], False,'keyid,issuer', issuer=ca_cert)])
+                crypto.X509Extension(config.extensions['ku'], True,"keyCertSign, cRLSign"),crypto.X509Extension(config.extensions['ski'], False, "hash",subject=ca_cert),crypto.X509Extension(config.extensions['aki'], False,'keyid,issuer', issuer=ca_cert)])
         
         # Adding additional extensions
         url = ""
@@ -227,7 +227,7 @@ class CRL(Base):
     id = Column(Integer,primary_key=True)
     ca = Column(Integer,ForeignKey('ca.id'))
     created = Column(DateTime,nullable=True,default=datetime.datetime.utcnow)
-    crl = Column(Text,nullable=False)   
+    crl = Column(LargeBinary,nullable=False)   
 
     # Methods
     def __init__(self):

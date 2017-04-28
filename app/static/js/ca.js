@@ -46,7 +46,7 @@ function buttonHandler(event){
 		case "btnDownloadCRL":
 			caid = parseInt($(event.currentTarget).attr("data"));
 			show_modal("crls/"+$(event.currentTarget).attr("data"),"List of generated CRLs",false,true,false)
-			break;
+			break;	
 	}
 }
 
@@ -151,11 +151,12 @@ function download_ca(id){
 	location.href = "/ca/"+id+"/crt"
 }
 function generate_crl(password){
+	hide_modal();
 	show_alert(TYPE_SUCCESS,"Generating new CRL. Please wait ....");
 	CreateAJAX("/ca/"+caid+"/crl/generate","POST","json",JSON.stringify({pass:password}))
 	.done(function(response){showToast("success",response.message,true);})
 	.fail(function(xhr){handle_error(xhr,true);})
-	.always(function(jqXHR, textStatus){hide_modal();});
+	.always(function(jqXHR, textStatus){hide_alert();});
 }
 
 

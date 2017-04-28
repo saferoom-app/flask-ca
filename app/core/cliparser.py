@@ -68,26 +68,21 @@ def init_parser():
     parser_certs.add_argument("--certificate_id","-id",required=False,help="Certificate's ID\n ",default="")
     parser_certs.add_argument("--name","-n",required=False,help="Specify the name of the certificate to be searched for.\nYou can specify the part of its name. For example 'John D'\n ",default="")
     parser_certs.add_argument("--status","-s",required=False,help="Specify the certificate statuses to filter the results. \nYou can specify several values separated by comma. You can use the following statuses: \nActive = 1\nRevoked = 2\nPaused = 3\nExpired = 4\n ",default=[])
-    
     parser_certs.add_argument("--caid","-c",required=False,help="Specify the Certificate Authority ID to filter the list of certificates. \nYOu can specify several values separated by comma\n ",default=[])
-    
     parser_certs.add_argument("--page","-pg",required=False,help="Specify the page to display the results. \nIf the total number of found certificates is above [ITEMS_PER_PAGE] value, then list is splitted into pages. \nITEMS_PER_PAGE is specified in the app configuration file: /config/caconfig.py\n ",default=1)
-    
     parser_certs.add_argument("--template_id","-tplid",required=False,help="Specify the template ID to generate certificates\n ",default="")
-    
     parser_certs.add_argument("--password","-p",required=False,help="Specify the password to decrypt issuing CA's private key\n ",default="")
-    
     parser_certs.add_argument("--user_id","-uid",required=False,help="User's ID\n ",default="")
-    
     parser_certs.add_argument("--pfxpassword","-pf",required=False,help="Password to protect PFX\n ",default="")
-    
     parser_certs.add_argument("--valid","-v",required=False,help="Certificate validity in months. Default: 12 months\nIf this value is greater than issuing CA expiration date, then app will use the CA expiration date\n ",default=12)
-    
     parser_certs.add_argument("--reason_revoke","-rr",required=False,help="Certificate's revocation reason. The following values are supported: \n0 = Unspecified\n1 = Key compromise\n2 = CA Compromise\n3 = Affiliation changed\n4 = Superseeded\n5 = Cessation of Operation\n6 = Certificate Hold\n\nDefault value: 0(Unspecified)\n ",default=0,choices=[0,1,2,3,4,5,6],type=int)
     parser_certs.add_argument("--comment","-cm",required=False,help="Comment to revoked certificate.\nHere you can specify some additional information about certificate revocation\n ",default="")
-
-
-    
     parser_certs.set_defaults(which='certificate')
+
+    # Helper parser
+    parser_helper = subparsers.add_parser('helper', help='Helper commands used to get additional information, like Country Indexes, Revocation reasons and etc',formatter_class=argparse.RawTextHelpFormatter)
+    parser_helper.add_argument("operation",nargs='?',help='Supported operations are the following:\n\n > list-countries = list all countries and their 2-letter indexes\n\n > list-reasons = list all revocation reasons with corresponding codes\n\n > list-ku = list all Key Usage extension values with explanation\n\n > list-sku = list all Extended Key Usage extensions values with explanation',choices=["list-countries","list-reasons","list-ku", "list-sku"])
+    parser_helper.add_argument("--name","-n",required=False,help="Name or part of country's name to filter the list",default="")
+    parser_helper.set_defaults(which='helper')
 
     return new_parser

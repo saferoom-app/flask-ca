@@ -81,7 +81,7 @@ function show_modal(mode,title,isApply,isClose,isLarge){
 function hide_modal(){$("#modalDialog").modal('hide');}
 
 function select_all(){
-	console.log($("table").find("input[id!='selectAll']"));
+	//console.log($("table").find("input[id!='selectAll']"));
 	$("table").find("input[id!='selectAll']")
 		.prop("checked",$("input#selectAll").is(":checked"));
 }
@@ -110,6 +110,9 @@ function show_alert(type,message){
 	}
 	$("span#alertMessage").html(message);
 	$("div#panelAlert").show();
+}
+function hide_alert(type,message){
+	$("div#panelAlert").hide();
 }
 $(document).on("click",".close",function(e){$("#panelAlert").hide();});
 $(document).on("click","input#selectAll",function(e){select_all()});
@@ -151,10 +154,15 @@ function set_progress(status,current,total){
 	$("#pBar").css("width",percent.toString()+"%");
 	$("#current_progress").html("Processed "+current.toString()+" out of "+total.toString());
 }
-
-$(document).on("click","tr#userRow",function(){
+$(document).on("click","tr#userRow input[type='checkbox']",function(event){
+	event.stopPropagation();
+});
+$(document).on("click","tr#userRow button",function(event){
+	event.stopPropagation();
+});
+$(document).on("click","tr#userRow",function(event){
 	var checkbox = $(this).find("input[type='checkbox']");
-	checkbox.prop("checked",!checkbox.is(":checked"))	
+	checkbox.trigger("click");
 });
 
 function formatDate(date) {

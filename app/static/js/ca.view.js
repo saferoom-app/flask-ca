@@ -30,3 +30,28 @@ function get_ca(id){
 	})
 	.fail(function(xhr){$("#ca_content").html(xhr.responseText);})
 }
+
+$(document).on("click","button",buttonHandler);
+function buttonHandler(event){
+	var id = event.currentTarget.id;
+	switch (id){
+		case "btnDelete":
+			show_modal("deleteca","Deleting Certificate Authority",true,true,false);
+			break;
+		case "btnApply":
+			delete_ca();
+			break;
+	}
+}
+
+function delete_ca(){
+	// Hiding modal window
+	hide_modal();
+	// Displaying progress
+	show_alert(TYPE_SUCCESS,"Deleting Certificate Authority. Please wait ...")
+
+	// Deleting CA
+	CertificateAuthority.delete($("#ca_id").val(),$("#txtPass").val());
+
+	
+}

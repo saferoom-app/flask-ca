@@ -81,4 +81,11 @@ class CertificateAuthority{
 		.done(function(response){showToast("success",response.message,true);})
 		.fail(function(xhr){handle_error(xhr,true);});
 	}
+
+	static delete(id,pass){
+		CreateAJAX("/ca/"+id+"/delete","DELETE","json",JSON.stringify({pass:pass}))
+		.done(function(response){showToast("success",response.message,true);})
+		.fail(function(xhr){handle_error(xhr,true);})
+		.always(function(xhr,status){hide_alert();});
+	}
 }	

@@ -251,3 +251,7 @@ body{
 .iconButton:hover{
   cursor: pointer; 
 }
+.dialogList li{
+  margin-top:10px;
+  margin-bottom:10px;
+}

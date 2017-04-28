@@ -53,6 +53,19 @@ def send_json_request(method,url,params=[]):
     print_message(data['message'],level="INFO")
     exit()
 
+def print_table(items):   
+
+
+    table = Texttable()
+    table.set_cols_align(["c"]*len(items[0].keys()))
+    table.set_cols_align(["m"]*len(items[0].keys()))
+    table.add_row([key.upper() for key in items[0].keys()])    
+    for item in items:
+        row = []
+        for key in item.keys():
+            row.append(item[key])
+        table.add_row(row)
+    print table.draw()
 
 
 #########################################################
@@ -476,3 +489,57 @@ elif option.which == "certificate":
 
         # Sending file request
         print send_file_request("GET","certificates/download/%s" % option.certificate_id)  
+
+#########################################################
+#                 Helper operations                     #
+######################################################### 
+
+elif option.which == "helper":
+
+    # Getting a list of countries
+    if option.operation == "list-countries":
+        headers = {'Content-Type': 'application/json'}
+        data = send_request("GET","static/countries.json",params=[],headers=headers)
+        if option.name:
+            countries = [{"code":country['code'],"name":country['name']} for country in data if option.name in country['name']]
+        else:
+            countries = data
+
+
+        print_table(countries)
+
+    # Listing the revocation reasons
+    elif option.operation == "list-reasons":
+        
+        reasons = config.reasons
+
+        table = Texttable()
+        table.set_cols_align(["c", "c"])
+        table.set_cols_valign(["m", "m"])
+        table.add_row(["Code", "Reason"])
+        for key in sorted(reasons.keys()):
+            table.add_row([key, reasons[key]])
+        print table.draw()
+        exit()
+
+    # Listing the Key Usage values
+    elif option.operation == "list-ku":
+        table = Texttable()
+        table.set_cols_align(["c", "c","c"])
+        table.set_cols_valign(["m", "m","m"])
+        table.add_row(["Value", "Name","Description"])
+        for ku in config.key_usages:
+            table.add_row([ku['value'],ku['name'],ku['dscr']])
+        print table.draw()
+        exit()
+
+    # Listing the Extended Key Usage values
+    elif option.operation == "list-sku":
+        table = Texttable()
+        table.set_cols_align(["c", "c"])
+        table.set_cols_valign(["m", "m"])
+        table.add_row(["Value", "Name"])
+        for ku in config.ext_key_usages:
+            table.add_row([ku['value'],ku['name']])
+        print table.draw()
+        exit()       

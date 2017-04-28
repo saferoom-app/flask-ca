@@ -177,6 +177,9 @@ def handle_ocsp_requests(caid):
 # Route used to provide the latest CRL (CDP value)
 @mod_ca.route("/<string:caid>/crl/full",methods=["GET"])
 def get_latest_crl(caid):
+
+    # Import section
+    import base64
     
     # Getting the latest CRL object
     crl = CRL.query.filter_by(ca=caid).order_by(desc(CRL.created)).limit(1).first()
@@ -184,7 +187,7 @@ def get_latest_crl(caid):
         abort(config.http_notfound,{"message":config.error_crl_notfound})
 
     # Sending response
-    response = Response(crl.crl)
+    response = Response(base64.b64decode(crl.crl))
     response.headers['Content-Type'] = config.MIME_CRL
     response.headers['Content-Disposition'] = "attachment; filename=%s.crl;" % crl.id
     return response
@@ -238,7 +241,7 @@ def generate_full_crl(caid):
     # Creating new CRL
     crlObject = CRL()
     crlObject.created = datetime.datetime.utcnow()
-    crlObject.crl = crl.export(public_key,private_key,crypto.FILETYPE_PEM,\
+    crlObject.crl = crl.export(public_key,private_key,crypto.FILETYPE_ASN1,\
         days=config.CRL_VALID_DAYS,digest=b'sha256')
     ca.crls.append(crlObject)
     db_session.add(crlObject)
@@ -269,6 +272,7 @@ def download_crl(crlid):
 
     # Sending response
     response = Response(crl.crl)
+    response.headers['Transfer-Encoding'] = config.ENCODING_CHUNKED
     response.headers['Content-Type'] = config.MIME_CRL
     response.headers['Content-Disposition'] = "attachment; filename=%s.crl;" % crl.id
     return response
@@ -323,6 +327,41 @@ def download_private(caid):
     response.headers['Content-Type'] = config.MIME_PEM
     response.headers['Content-Disposition'] = "attachment; filename=%s.pem;" % ca.name
     return response
+
+@mod_ca.route("/<string:caid>/delete",methods=["DELETE"])
+@process_request
+def delete_ca(caid):
+
+    # Import section
+    from OpenSSL import crypto, SSL
+
+    # Getting JSON data
+    data = request.get_json()
+
+    # Getting CA information
+    ca = CertificateAuthority.query.get(caid)
+    if not ca:
+        abort(config.http_notfound,{"message":config.error_ca_notfound})
+
+    key = ca.keys[0]
+    if not key:
+        abort(config.http_notfound,{"message":config.error_pkey_notfound})
+
+    # Checking that provided password was OK
+    try:
+        private_key = crypto.load_privatekey(crypto.FILETYPE_PEM,key.private,passphrase=str(data['pass']))
+    except Exception as e:
+        abort(config.http_notauthorized,{"message":config.error_pass_incorrect})
+
+    # Deleting CA certificates, keys and CRLs
+    db_session.delete(ca)
+    db_session.commit()
+
+    return jsonify(message=config.msg_ca_deleted),config.http_ok
+
+
+
+
 
 def assign_ca(data,rawCA):
     if data['ID'] == rawCA.root_ca:
