@@ -24,7 +24,7 @@ def list_templates():
     result = Template.query.all()
     templates = []
     for template in result:
-    	templates.append({"id":template.id,"name":template.name,"dscr":template.dscr})
+    	templates.append({"id":template.id,"name":template.name,"description":template.dscr})
     return jsonify(templates=templates)
 
 @mod_template.route("/create",methods=["POST"])
