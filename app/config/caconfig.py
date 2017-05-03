@@ -83,6 +83,7 @@ msg_ca_deleted = "Certificate Authority has been successfully deleted"
 msg_certificates_generated = "Certificates have been successfully generated"
 msg_certs_revoked = "Certificates have been successfully revoked"
 msg_cert_restored = "Certificate has been successfully restored"
+msg_certs_deleted = "Certificate(s) have been successfully deleted"
 msg_user_created = "User has been successfully created"
 msg_user_updated = "User has been successfully updated"
 msg_users_deleted = "Selected users have been successfully deleted"
@@ -118,3 +119,7 @@ MIME_CACERT = "application/x-x509-ca-cert"
 
 # Transfer Encoding types
 ENCODING_CHUNKED = "chunked"
+
+# Response formats
+FORMAT_BASE64 = "base64"
+FORMAT_BINARY = "binary"

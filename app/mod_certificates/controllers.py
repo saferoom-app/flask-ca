@@ -79,7 +79,7 @@ def generate_certificates():
     # Getting data
     data = request.get_json()
     valid = 0
-    index = 0
+    index = 0    
 
     # Writing status
     write_status(data['sid'],{"status":"Initializing","value":0},path=config.path_status)
@@ -138,10 +138,9 @@ def revoke_certificates():
 
     # Getting JSON data
     data = request.get_json()
-    
+
     # Getting a list of certificates to be revoked
     result = Certificate.query.filter(Certificate.id.in_(data['certs'])).all()
-
     for cert in result:
         if cert.status == config.STATUS_ACTIVE:
             if data['reason'] == 6:
@@ -159,6 +158,9 @@ def revoke_certificates():
 ### Downloading the PFX
 @mod_certificates.route("/download/<string:id>")
 def get_pfx(id):
+    
+    # Import
+    import base64
 
     # Getting certificate
     cert = Certificate.query.get(id)
@@ -175,12 +177,13 @@ def get_pfx(id):
 @mod_certificates.route("/download/public/<string:id>")
 def get_public_key(id):
 
+    import base64
+
     # Getting certificate
     cert = Certificate.query.get(id)
     if not cert:
-        abort(config.http_notfound,{"message":config.error_cert_notfound})
-
-    # Generating response
+        abort(config.http_notfound,{"message":config.error_cert_notfound})   
+    
     response = Response(cert.public)
     response.headers['Content-Type'] = config.MIME_PEM
     response.headers['Content-Disposition'] = "attachment; filename=%s.pem;" % cert.name
@@ -235,3 +238,18 @@ def restore_certificates():
     db_session.commit()
 
     return jsonify(message=config.msg_cert_restored),config.http_ok
+
+#### Deleting certificates
+@mod_certificates.route("/delete",methods=["DELETE"])
+@process_request
+def delete_certificates():
+    
+    # Getting JSON data
+    data = request.get_json()
+
+    # Getting the list of selected templates
+    certs = Certificate.query.filter(Certificate.id.in_(data))
+    for cert in certs:
+        db_session.delete(cert)
+    db_session.commit()
+    return jsonify(message=config.msg_certs_deleted),config.http_ok

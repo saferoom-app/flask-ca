@@ -376,7 +376,6 @@ elif option.which == "ca":
         # Getting the CRL
         print send_file_request("GET","ca/crl/get/%s" % option.id)
 
-
 #########################################################
 #                 Certificate operations                #
 ######################################################### 

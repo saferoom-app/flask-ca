@@ -38,7 +38,7 @@ def list_ca():
     # Prepare and send response
     cas = []
     for ca in result:
-        cas.append({"id":ca.id,"name":ca.name,"dscr":ca.dscr,"root_ca":get_root_ca(ca.root_ca,result)})
+        cas.append({"id":ca.id,"name":ca.name,"description":ca.dscr,"root_ca":get_root_ca(ca.root_ca,result)})
 
     return jsonify(cas=cas)
 
@@ -69,7 +69,8 @@ def create_ca():
 
     # Creating new CA
     ca = CertificateAuthority(name=data['name'],subject_dn=json.dumps(data['subjectDN']))
-    ca.extensions = json.dumps(data['extensions'])    
+    ca.dscr = data['dscr']
+    ca.extensions = json.dumps(data['extensions'])
 
     # If Root CA is specified we need to get its key
     root_key = None

@@ -64,6 +64,16 @@ function buttonHandler(event){
                 restore_certificates(event.currentTarget.getAttribute("data"))
             }
             break;
+        case "btnDelete":
+            if ($("input[id!='selectAll']:checked").length == 0){
+                show_alert(TYPE_ERROR,"Select at least one certificate to delete");
+                return;
+            }
+            if (window.confirm("Are you sure that you want to delete selected certificate(s)?")){
+                delete_certificates();
+            }
+            
+            break;
     }
 }
 
@@ -101,4 +111,10 @@ function restore_certificates(id){
     .done(function(response){showToast("success",response.message,true);list_certificates();})
     .fail(function(xhr){handle_error(xhr,true);})
 }
- 
+function delete_certificates(){
+    certs = new Array();
+    $("input[id!='selectAll']:checked").each(function(){certs.push(this.id);});
+    CreateAJAX("/certificates/delete","DELETE","json",JSON.stringify(certs))
+        .done(function(response){list_certificates();showToast("success",response.message,true);})
+        .fail(function(xhr){handle_error(xhr);});
+ }
