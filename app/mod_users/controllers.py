@@ -42,7 +42,7 @@ def create_user():
 	db_session.commit()
 
 	# Sending response
-	return jsonify(message=config.msg_user_created),config.http_created
+	return jsonify(message=config.msg_user_created,user={"id":user.id,"name":user.name}),config.http_created
 
 @mod_users.route("/update",methods=["POST"])
 @process_request

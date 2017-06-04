@@ -131,6 +131,7 @@ class Certificate(Base):
     public = Column(Text)                                        # Public key
     p12 = Column(Text)                                           # PFX data in Base
     status = Column(Integer,default=1)                           # Current status: 1 = Active, 2 = Revoked, 3 = Expired
+    created = Column(DateTime,default=datetime.datetime.now())
     code_revoke = Column(Integer,default=-1)                     # Revocation code
     reason_revoke = Column(String(256),nullable=True,default="") # Revocation reason (if any)
     date_revoke = Column(DateTime,nullable=True,default=None)

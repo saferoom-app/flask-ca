@@ -35,25 +35,25 @@ def list_certificates():
     data = request.get_json()
     
     # Creating query
-    query = Certificate.query.with_entities(Certificate.id,Certificate.name,Certificate.status,Certificate.code_revoke,Certificate.reason_revoke,Certificate.serial).filter(Certificate.name.ilike("%"+data['search']+"%"))
+    query = Certificate.query.with_entities(Certificate.id,Certificate.name,Certificate.status,Certificate.code_revoke,Certificate.reason_revoke,Certificate.serial,Certificate.created).filter(Certificate.name.ilike("%"+data['search']+"%"))
     
     # Getting a list of certificates (first, without filters)
     if data['ca']:
     	query = query.filter(Certificate.ca.in_(data['ca']))
     if data['status']:
     	query = query.filter(Certificate.status.in_(data['status']))
-
+    
     certificates = []
     
     # Calculating the total number
     total = query.count()
 
     # Adding the LIMIT function
-    query = query.limit(config.ITEMS_PER_PAGE).offset((data['page']-1)*config.ITEMS_PER_PAGE)
+    query = query.order_by(Certificate.created.desc()).limit(config.ITEMS_PER_PAGE).offset((data['page']-1)*config.ITEMS_PER_PAGE)
 
     result = query.all()
     for cert in result:
-        certificates.append({"id":cert.id,"name":cert.name,"status":cert.status,"code":config.reasons[str(cert.code_revoke)],"reason":cert.reason_revoke,"serial":cert.serial})
+        certificates.append({"id":cert.id,"name":cert.name,"status":cert.status,"code":config.reasons[str(cert.code_revoke)],"reason":cert.reason_revoke,"serial":cert.serial,"created":cert.created})
     return jsonify(certificates=certificates,\
         reasons=config.reasons,\
         pages=int(ceil(float(total) / config.ITEMS_PER_PAGE)),\
@@ -79,7 +79,8 @@ def generate_certificates():
     # Getting data
     data = request.get_json()
     valid = 0
-    index = 0    
+    index = 0
+    certificates = [] 
 
     # Writing status
     write_status(data['sid'],{"status":"Initializing","value":0},path=config.path_status)
@@ -127,10 +128,11 @@ def generate_certificates():
         certificate.authority = ca
         db_session.add(certificate)
         db_session.commit()
+        certificates.append({"id":certificate.id,"serial":certificate.serial,"name":certificate.name})
 
     # Clearing status messages
     remove_status(data['sid'],path=config.path_status)
-    return jsonify(message=config.msg_certificates_generated),config.http_created
+    return jsonify(message=config.msg_certificates_generated,certificates=certificates),config.http_created
 
 @mod_certificates.route("/revoke",methods=["POST"])
 @process_request

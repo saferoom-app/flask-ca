@@ -4,6 +4,7 @@
 		<th>Name</th>
 		<th>Serial number</th>
 		<th>Status</th>
+		<th>Created</th>
 		<th>Comment</th>
 		<th>Action</th>
 	</thead>
@@ -27,6 +28,7 @@
 					<span class="label label-danger">Expired</span>
 				{{/if_eq}}				
 			</td>
+			<td>{{created}}</td>
 			<td>{{reason}}</td>
 			<td>
 				<button title="Download certificate(public key)" id="btnDownloadPub" data="{{id}}" class="btn btn-primary">Public Key</button>

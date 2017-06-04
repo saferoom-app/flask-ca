@@ -72,7 +72,8 @@ class CertificateRequest():
 
     	# Alternative name
     	if result['altname'] != "":
-    		self.extensions.append({"name":extensions['salt'],"crit":False,"value":result['altname']})
+            
+    		self.extensions.append({"name":extensions['salt'],"crit":False,"value":str(result['altname'])})
 
         # Setting keylen
         self.keylen = int(result['keylen'])

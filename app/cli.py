@@ -508,18 +508,8 @@ elif option.which == "helper":
         print_table(countries)
 
     # Listing the revocation reasons
-    elif option.operation == "list-reasons":
+    elif option.operation == "list-reasons":    
         
-        reasons = config.reasons
-
-        table = Texttable()
-        table.set_cols_align(["c", "c"])
-        table.set_cols_valign(["m", "m"])
-        table.add_row(["Code", "Reason"])
-        for key in sorted(reasons.keys()):
-            table.add_row([key, reasons[key]])
-        print table.draw()
-        exit()
 
     # Listing the Key Usage values
     elif option.operation == "list-ku":

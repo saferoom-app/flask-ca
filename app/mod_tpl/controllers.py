@@ -42,7 +42,7 @@ def create_template():
     db_session.add(template)
     db_session.commit()
 
-    return jsonify(message=config.msg_tpl_created),config.http_created
+    return jsonify(message=config.msg_tpl_created,template={"id":template.id,"name":template.name}),config.http_created
 
 @mod_template.route("/delete",methods=["DELETE"])
 @process_request
