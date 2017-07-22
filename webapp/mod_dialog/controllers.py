@@ -1,7 +1,7 @@
 # Import section
 from flask import Blueprint, jsonify,abort,request,render_template
-import app.config.caconfig as config
-from app.core.models import CertificateAuthority, Template, User, CRL, Certificate
+import webapp.config.caconfig as config
+from webapp.models import db,CertificateAuthority, Template, User, CRL, Certificate
 
 # Initializing the blueprint
 mod_modal = Blueprint("mod_modal",__name__,url_prefix='/modal')

@@ -1,12 +1,11 @@
 # Import section
-from flask import Blueprint, abort,request,render_template,jsonify, Response
-from app.core.database import db_session
-from sqlalchemy import desc
-from app.core.decorators import process_request
-from app.core.models import CertificateAuthority, Key, Certificate, CRL
 import json,datetime,time
+from flask import Blueprint, abort,request,render_template,jsonify, Response
+from sqlalchemy import desc
+from webapp.core.decorators import process_request
+from webapp.models import db,CertificateAuthority, Key, Certificate, CRL
 from dateutil.relativedelta import relativedelta
-import app.config.caconfig as config
+import webapp.config.caconfig as config
 
 # Define the Blueprint
 mod_ca = Blueprint('mod_ca', __name__, url_prefix='/ca')
@@ -90,8 +89,8 @@ def create_ca():
             abort(config.http_notauthorized,{"message":config.error_pass_incorrect})
     
     # Adding the CA to the database
-    db_session.add(ca)
-    db_session.commit()
+    db.session.add(ca)
+    db.session.commit()
 
     # Creating a pair of keys
     key = Key()
@@ -101,8 +100,8 @@ def create_ca():
         
     # Adding to database
     ca.keys.append(key)
-    db_session.add(key)
-    db_session.commit()
+    db.session.add(key)
+    db.session.commit()
 
     return jsonify(message=config.msg_ca_created),config.http_created
 
@@ -128,7 +127,6 @@ def get_ca(id):
     
     for crl in crls:
         ca['crls'].append({"id":crl.id,"created":crl.created})
-    print key.expires_in
     ca['expires'] = time.mktime(key.expires_in.timetuple())
     return jsonify(ca=ca)
 
@@ -245,8 +243,8 @@ def generate_full_crl(caid):
     crlObject.crl = crl.export(public_key,private_key,crypto.FILETYPE_ASN1,\
         days=config.CRL_VALID_DAYS,digest=b'sha256')
     ca.crls.append(crlObject)
-    db_session.add(crlObject)
-    db_session.commit()
+    db.session.add(crlObject)
+    db.session.commit()
     return jsonify(message=config.msg_crl_generated),config.http_created
 
 @mod_ca.route("/<string:caid>/crl/list",methods=["GET"])
@@ -287,8 +285,8 @@ def delete_crls(crlid):
         abort(config.http_notfound,{"message":config.error_crl_notfound})
 
     # Deleting found CRL
-    db_session.delete(crl)
-    db_session.commit()
+    db.session.delete(crl)
+    db.session.commit()
 
     # Sending response
     return jsonify(message=config.msg_crl_deleted),config.http_ok
@@ -355,14 +353,9 @@ def delete_ca(caid):
         abort(config.http_notauthorized,{"message":config.error_pass_incorrect})
 
     # Deleting CA certificates, keys and CRLs
-    db_session.delete(ca)
-    db_session.commit()
-
+    db.session.delete(ca)
+    db.session.commit()
     return jsonify(message=config.msg_ca_deleted),config.http_ok
-
-
-
-
 
 def assign_ca(data,rawCA):
     if data['ID'] == rawCA.root_ca:

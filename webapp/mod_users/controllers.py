@@ -1,9 +1,8 @@
 # Import section
 from flask import Blueprint, jsonify,abort,request,render_template
-from app.core.models import User
-from app.core.decorators import process_request
-from app.core.database import db_session
-import app.config.caconfig as config
+from webapp.models import User
+from webapp.core.decorators import process_request
+import webapp.config.caconfig as config
 
 # Initializing the blueprint
 mod_users = Blueprint("mod_users",__name__,url_prefix='/users')
@@ -38,8 +37,8 @@ def create_user():
 	user = User(data['name'])
 	user.email = data['email']
 	user.subject = data['subject']
-	db_session.add(user)
-	db_session.commit()
+	db.session.add(user)
+	db.session.commit()
 
 	# Sending response
 	return jsonify(message=config.msg_user_created,user={"id":user.id,"name":user.name}),config.http_created
@@ -62,7 +61,7 @@ def update_user():
     user.name = data['name']
     user.email = data['email']
     user.subject = data['subject']
-    db_session.commit()
+    db.session.commit()
 
     # Sending response
     return jsonify(message=config.msg_user_updated),config.http_ok
@@ -77,6 +76,6 @@ def delete_users():
     # Getting the list of selected templates
     users = User.query.filter(User.id.in_(data))
     for user in users:
-        db_session.delete(user)
-    db_session.commit()
+        db.session.delete(user)
+    db.session.commit()
     return jsonify(message=config.msg_users_deleted),config.http_ok

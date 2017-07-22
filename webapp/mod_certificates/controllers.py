@@ -1,11 +1,10 @@
 # Import section
 from flask import Blueprint, jsonify,abort,request,render_template,Response
-import app.config.caconfig as config
-from app.core.models import Certificate,CertificateAuthority, Template, User, Key
-from app.classes.CertificateRequest import CertificateRequest
-from app.core.decorators import process_request
-from app.core.database import db_session
-from app.core.functions import write_status,get_status,remove_status,force_bytes
+import webapp.config.caconfig as config
+from webapp.models import db,Certificate,CertificateAuthority, Template, User, Key
+from webapp.classes.CertificateRequest import CertificateRequest
+from webapp.core.decorators import process_request
+from webapp.core.functions import write_status,get_status,remove_status,force_bytes
 from OpenSSL import crypto,rand
 import time, datetime
 
@@ -126,8 +125,8 @@ def generate_certificates():
         certificate = cert_request.generate(private_key,public_key,item['pass'])
         certificate.name = user.name
         certificate.authority = ca
-        db_session.add(certificate)
-        db_session.commit()
+        db.session.add(certificate)
+        db.session.commit()
         certificates.append({"id":certificate.id,"serial":certificate.serial,"name":certificate.name})
 
     # Clearing status messages
@@ -152,7 +151,7 @@ def revoke_certificates():
             cert.code_revoke = data['reason']
             cert.reason_revoke = data['comment']
             cert.date_revoke = datetime.datetime.now()
-    db_session.commit()
+    db.session.commit()
     
 
     return jsonify(message=config.msg_certs_revoked),config.http_ok
@@ -237,7 +236,7 @@ def restore_certificates():
     cert.reason_revoke = ""
     cert.code_revoke = -1
     cert.date_revoke = None
-    db_session.commit()
+    db.session.commit()
 
     return jsonify(message=config.msg_cert_restored),config.http_ok
 
@@ -252,6 +251,6 @@ def delete_certificates():
     # Getting the list of selected templates
     certs = Certificate.query.filter(Certificate.id.in_(data))
     for cert in certs:
-        db_session.delete(cert)
-    db_session.commit()
+        db.session.delete(cert)
+    db.session.commit()
     return jsonify(message=config.msg_certs_deleted),config.http_ok

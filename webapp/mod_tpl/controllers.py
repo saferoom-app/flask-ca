@@ -1,9 +1,8 @@
 # Import section
 from flask import Blueprint, jsonify,abort,request,render_template
-from app.core.models import Template
-from app.core.decorators import process_request
-from app.core.database import db_session
-import app.config.caconfig as config
+from webapp.core.decorators import process_request
+import webapp.config.caconfig as config
+from webapp.models import db,Template
 
 # Initializing the blueprint
 mod_template = Blueprint("mod_template",__name__,url_prefix='/tpls')
@@ -39,8 +38,8 @@ def create_template():
     template.set_extensions(data['extensions'])
     
     # Adding template to the database
-    db_session.add(template)
-    db_session.commit()
+    db.session.add(template)
+    db.session.commit()
 
     return jsonify(message=config.msg_tpl_created,template={"id":template.id,"name":template.name}),config.http_created
 
@@ -54,8 +53,8 @@ def delete_template():
     # Getting the list of selected templates
     tpls = Template.query.filter(Template.id.in_(data))
     for tpl in tpls:
-        db_session.delete(tpl)
-    db_session.commit()
+        db.session.delete(tpl)
+    db.session.commit()
     return jsonify(message=config.msg_tpls_deleted),config.http_ok
 
 @mod_template.route("/get/<string:tplid>")
@@ -83,5 +82,5 @@ def update_template():
     template.name = data['name']
     template.dscr = data['dscr']
     template.set_extensions(data['extensions'])
-    db_session.commit()
+    db.session.commit()
     return jsonify(message=config.msg_tpl_updated),config.http_ok

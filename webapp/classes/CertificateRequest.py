@@ -1,5 +1,5 @@
 # Import section
-from app.core.models import Certificate
+from webapp.models import Certificate
 import time,datetime,hashlib,uuid,json,base64
 from OpenSSL import crypto, SSL
 

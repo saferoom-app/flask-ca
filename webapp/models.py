@@ -1,25 +1,24 @@
 # Import section
-from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, DateTime, Table, Text,LargeBinary
-from database import Base
-from sqlalchemy.orm import relationship
 from OpenSSL import crypto, SSL
 import hashlib,uuid,base64,json,ConfigParser,datetime
-import app.config.caconfig as config
+from flask_sqlalchemy import SQLAlchemy
+from webapp.config import caconfig as config
+db = SQLAlchemy()
 
 # Define a base model for other database tables to inherit
-class CertificateAuthority(Base):
+class CertificateAuthority(db.Model):
     __tablename__ = "ca"
-    id = Column(Integer,primary_key=True)
-    root_ca = Column(Integer,default=0)
-    name = Column(String(256),index=True)
-    dscr = Column(String(256),index=True)
-    subject_dn = Column(String(128),index=True)
-    extensions = Column(Text,index=False)
+    id = db.Column(db.Integer,primary_key=True)
+    root_ca = db.Column(db.Integer,default=0)
+    name = db.Column(db.String(256),index=True)
+    dscr = db.Column(db.String(256),index=True)
+    subject_dn = db.Column(db.String(128),index=True)
+    extensions = db.Column(db.Text,index=False)
 
     # Relationships
-    keys = relationship('Key',cascade="all,delete")
-    certificates = relationship("Certificate",cascade="all,delete")
-    crls = relationship("CRL",cascade="all,delete")
+    keys = db.relationship('Key',cascade="all,delete")
+    certificates = db.relationship("Certificate",cascade="all,delete")
+    crls = db.relationship("CRL",cascade="all,delete")
 
     def __init__(self,name=None,subject_dn=""):
         self.name = name
@@ -36,14 +35,14 @@ class CertificateAuthority(Base):
        ca['extensions'] = json.loads(ca['extensions'])
        return ca
 
-class Key(Base):
+class Key(db.Model):
     __tablename__ = "ca_keys"
     # Columns
-    id = Column(Integer,primary_key=True)
-    ca = Column(Integer,ForeignKey('ca.id'))
-    private = Column(Text)
-    public = Column(Text)
-    expires_in = Column(DateTime)
+    id = db.Column(db.Integer,primary_key=True)
+    ca = db.Column(db.Integer,db.ForeignKey('ca.id'))
+    private = db.Column(db.Text)
+    public = db.Column(db.Text)
+    expires_in = db.Column(db.DateTime)
 
     # Fields
     pkey = None
@@ -120,24 +119,24 @@ class Key(Base):
             f.write(self.public)
         return path % self.id+".private.key",path % self.id+".public.key" 
 
-class Certificate(Base):
+class Certificate(db.Model):
     __tablename__ = "certificates"
 
     # Columns
-    id = Column(Integer,primary_key=True)
-    ca = Column(Integer,ForeignKey('ca.id'))                     # The certificate authority that issued this certificate
-    name = Column(String(128),index=True,nullable=False)
-    serial = Column(String(64))                                  # Certificate serial number
-    public = Column(Text)                                        # Public key
-    p12 = Column(Text)                                           # PFX data in Base
-    status = Column(Integer,default=1)                           # Current status: 1 = Active, 2 = Revoked, 3 = Expired
-    created = Column(DateTime,default=datetime.datetime.now())
-    code_revoke = Column(Integer,default=-1)                     # Revocation code
-    reason_revoke = Column(String(256),nullable=True,default="") # Revocation reason (if any)
-    date_revoke = Column(DateTime,nullable=True,default=None)
+    id = db.Column(db.Integer,primary_key=True)
+    ca = db.Column(db.Integer,db.ForeignKey('ca.id'))                     # The certificate authority that issued this certificate
+    name = db.Column(db.String(128),index=True,nullable=False)
+    serial = db.Column(db.String(64))                                  # Certificate serial number
+    public = db.Column(db.Text)                                        # Public key
+    p12 = db.Column(db.Text)                                           # PFX data in Base
+    status = db.Column(db.Integer,default=1)                           # Current status: 1 = Active, 2 = Revoked, 3 = Expired
+    created = db.Column(db.DateTime,default=datetime.datetime.now())
+    code_revoke = db.Column(db.Integer,default=-1)                     # Revocation code
+    reason_revoke = db.Column(db.String(256),nullable=True,default="") # Revocation reason (if any)
+    date_revoke = db.Column(db.DateTime,nullable=True,default=None)
 
     # Relationship
-    authority = relationship('CertificateAuthority')
+    authority = db.relationship('CertificateAuthority')
 
     # Initializing the certificate
     def __init__(self):
@@ -151,14 +150,14 @@ class Certificate(Base):
             f.write(self.public)
         return path % self.id+".cert.pem"
 
-class Template(Base):
+class Template(db.Model):
     __tablename__ = "templates"
 
     # Columns
-    id = Column(Integer,primary_key=True)
-    name = Column(String(128),index=True)
-    dscr = Column(String(256),index=True)
-    extensions = Column(Text)
+    id = db.Column(db.Integer,primary_key=True)
+    name = db.Column(db.String(128),index=True)
+    dscr = db.Column(db.String(256),index=True)
+    extensions = db.Column(db.Text)
 
     def __init__(self,name,dscr):
         self.name = name
@@ -184,14 +183,14 @@ class Template(Base):
     def from_file(path):
         pass
 
-class User(Base):
+class User(db.Model):
     __tablename__ = "users"
 
     # Columns
-    id = Column(Integer,primary_key=True)
-    name = Column(String(128),index=True)
-    email = Column(String(256),index=True)
-    subject = Column(String(256),nullable=True,index=True)
+    id = db.Column(db.Integer,primary_key=True)
+    name = db.Column(db.String(128),index=True)
+    email = db.Column(db.String(256),index=True)
+    subject = db.Column(db.String(256),nullable=True,index=True)
 
     def __init__(self,name):
         self.name = name
@@ -221,14 +220,14 @@ class User(Base):
             user['subject'][temp_array[0].strip()] = temp_array[1].strip()     
         return user
 
-class CRL(Base):
+class CRL(db.Model):
     __tablename__ = "crls"
 
     # Columns
-    id = Column(Integer,primary_key=True)
-    ca = Column(Integer,ForeignKey('ca.id'))
-    created = Column(DateTime,nullable=True,default=datetime.datetime.utcnow)
-    crl = Column(LargeBinary,nullable=False)   
+    id = db.Column(db.Integer,primary_key=True)
+    ca = db.Column(db.Integer,db.ForeignKey('ca.id'))
+    created = db.Column(db.DateTime,nullable=True,default=datetime.datetime.utcnow)
+    crl = db.Column(db.LargeBinary,nullable=False)   
 
     # Methods
     def __init__(self):

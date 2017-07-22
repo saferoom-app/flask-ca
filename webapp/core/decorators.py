@@ -1,7 +1,7 @@
 # Import section
 from functools import wraps
 from flask import request, abort,session
-import app.config.caconfig as config
+import webapp.config.caconfig as config
 
 # Functions
 def process_request(f):

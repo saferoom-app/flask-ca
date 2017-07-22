@@ -1,23 +1,22 @@
 # Import flask and template operators
+from config.config import DevelopmentConfig
+import os
 from flask import Flask, render_template,jsonify,redirect,url_for,send_from_directory,request
 from flask_sqlalchemy import SQLAlchemy
-from core.database import db_session,init_db
 from core.functions import get_status
-from app.config import caconfig
-import os
+from models import db
 
 # Define the WSGI application object
 app = Flask(__name__)
-
-# Configurations
-app.config.from_object('config')
+app.config.from_object(DevelopmentConfig)
+db.init_app(app)
 
 # Import a module / component using its blueprint handler variable (mod_auth)
-from app.mod_ca.controllers import mod_ca
-from app.mod_tpl.controllers import mod_template
-from app.mod_dialog.controllers import mod_modal
-from app.mod_certificates.controllers import mod_certificates
-from app.mod_users.controllers import mod_users
+from mod_ca.controllers import mod_ca
+from mod_tpl.controllers import mod_template
+from mod_dialog.controllers import mod_modal
+from mod_certificates.controllers import mod_certificates
+from mod_users.controllers import mod_users
 
 # Registering Blueprints
 app.register_blueprint(mod_ca)
@@ -34,7 +33,7 @@ def add_header(response):
 
 @app.teardown_appcontext
 def shutdown_session(exception=None):
-    db_session.remove()
+    pass
 
 @app.route("/",methods=["GET"])
 def index_page():
@@ -43,17 +42,6 @@ def index_page():
 @app.route("/start",methods=["GET"])
 def start_app():
     return render_template("start.html",pageTitle="Saferoom CA :: Getting started")
-    
-
-@app.route("/init")
-def init():
-    try:
-        init_db()
-        return render_template("db.result.html",error=False,message=caconfig.msg_db_init)
-    except Exception as e:
-        return render_template("db.result.html",error=True,message=caconfig.error_db_init % str(e))
-
-	
 
 @app.route("/status/<string:sid>")
 def get_operation_status(sid):
@@ -88,3 +76,6 @@ def custom_403(error):
 @app.errorhandler(500)
 def custom_500(error):
 	return jsonify({'message': "Internal server error"}),500
+
+if __name__ == '__main__':
+    app.run()
