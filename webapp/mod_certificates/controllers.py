@@ -169,7 +169,7 @@ def get_pfx(id):
         abort(config.http_notfound,{"message":""})
 
     # Generating response
-    response = Response(cert.p12)
+    response = Response(base64.b64decode(cert.p12))
     response.headers['Content-Type'] = config.MIME_PFX
     response.headers['Content-Disposition'] = "attachment; filename=%s.pfx;" % cert.name
     return response

@@ -102,8 +102,8 @@ ocsp_url = server_url + "/ca/<ca_id>/ocsp"
 issuers_url = server_url + "/ca/<ca_id>/aia"
 
 # Paths
-path_status = "app/static/tmp/%s.status"
-path_keys = "app/static/tmp/%s"
+path_status = "webapp/static/tmp/%s.status"
+path_keys = "webapp/static/tmp/%s"
 
 # CRL global configuration
 CRL_VALID_DAYS = 365 # 1 year

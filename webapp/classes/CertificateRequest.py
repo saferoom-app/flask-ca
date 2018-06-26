@@ -53,17 +53,17 @@ class CertificateRequest():
     	# CRL Distribution Points
     	if result['crl']['inherit'] == 1:
             if ca_extensions['crl']:
-                self.extensions.append({"name":extensions['crl'],"crit":True,"value":"URI:%s" % str(ca_extensions['crl'].replace("<ca_id>",str(ca.id)))})
+                self.extensions.append({"name":extensions['crl'],"crit":False,"value":"URI:%s" % str(ca_extensions['crl'].replace("<ca_id>",str(ca.id)))})
     	else:
             if result['crl']['full']:
-                self.extensions.append({"name":extensions['crl'],"crit":True,"value":"URI:%s" % str(result['crl']['full'])})
+                self.extensions.append({"name":extensions['crl'],"crit":False,"value":"URI:%s" % str(result['crl']['full'])})
 
     	# CRL Distribution Points
     	if result['aia']['inherit'] == 1:
             if ca_extensions['ocsp']:
-                self.extensions.append({"name":extensions['aia'],"crit":True,"value":"OCSP;URI:%s" % str(ca_extensions['ocsp'].replace("<ca_id>",str(ca.id)))})
+                self.extensions.append({"name":extensions['aia'],"crit":False,"value":"OCSP;URI:%s" % str(ca_extensions['ocsp'].replace("<ca_id>",str(ca.id)))})
             if ca_extensions['issuers']:
-                self.extensions.append({"name":extensions['aia'],"crit":True,"value":"caIssuers;URI:%s" % str(ca_extensions['issuers'].replace("<ca_id>",str(ca.id)))})
+                self.extensions.append({"name":extensions['aia'],"crit":False,"value":"caIssuers;URI:%s" % str(ca_extensions['issuers'].replace("<ca_id>",str(ca.id)))})
     	else:
             if result['aia']['ocsp']:
                 self.extensions.append({"name":extensions['aia'],"crit":False,"value":"OCSP;URI:%s" % str(result['aia']['ocsp'])})
@@ -122,7 +122,6 @@ class CertificateRequest():
         cert.set_pubkey(pKey)
 
         # Adding extensions
-        print self.extensions
         for extension in self.extensions:
             if extension['value']:
                 cert.add_extensions([crypto.X509Extension(extension['name'],extension['crit'],extension['value'])])
